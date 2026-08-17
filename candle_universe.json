@@ -1,0 +1,1437 @@
+[
+  {
+    "symbol": "ADBL",
+    "name": "Agriculture Development Bank Limited",
+    "sector": "Commercial Banks"
+  },
+  {
+    "symbol": "CZBIL",
+    "name": "Citizen Bank International Limited",
+    "sector": "Commercial Banks"
+  },
+  {
+    "symbol": "EBL",
+    "name": "Everest Bank Limited",
+    "sector": "Commercial Banks"
+  },
+  {
+    "symbol": "GBIME",
+    "name": "Global IME Bank Limited",
+    "sector": "Commercial Banks"
+  },
+  {
+    "symbol": "HBL",
+    "name": "Himalayan Bank Limited",
+    "sector": "Commercial Banks"
+  },
+  {
+    "symbol": "KBL",
+    "name": "Kumari Bank Limited",
+    "sector": "Commercial Banks"
+  },
+  {
+    "symbol": "MBL",
+    "name": "Machhapuchchhre Bank Limited",
+    "sector": "Commercial Banks"
+  },
+  {
+    "symbol": "NABIL",
+    "name": "Nabil Bank Limited",
+    "sector": "Commercial Banks"
+  },
+  {
+    "symbol": "NBL",
+    "name": "Nepal Bank Limited",
+    "sector": "Commercial Banks"
+  },
+  {
+    "symbol": "NICA",
+    "name": "NIC Asia Bank Ltd.",
+    "sector": "Commercial Banks"
+  },
+  {
+    "symbol": "NMB",
+    "name": "NMB Bank Limited",
+    "sector": "Commercial Banks"
+  },
+  {
+    "symbol": "PCBL",
+    "name": "Prime Commercial Bank Ltd.",
+    "sector": "Commercial Banks"
+  },
+  {
+    "symbol": "SANIMA",
+    "name": "Sanima Bank Limited",
+    "sector": "Commercial Banks"
+  },
+  {
+    "symbol": "SBI",
+    "name": "Nepal SBI Bank Limited",
+    "sector": "Commercial Banks"
+  },
+  {
+    "symbol": "SBL",
+    "name": "Siddhartha Bank Limited",
+    "sector": "Commercial Banks"
+  },
+  {
+    "symbol": "SCB",
+    "name": "Standard Chartered Bank Limited",
+    "sector": "Commercial Banks"
+  },
+  {
+    "symbol": "PRVU",
+    "name": "Prabhu Bank Limited",
+    "sector": "Commercial Banks"
+  },
+  {
+    "symbol": "NIMB",
+    "name": "Nepal Investment Mega Bank Limited",
+    "sector": "Commercial Banks"
+  },
+  {
+    "symbol": "LSL",
+    "name": "Laxmi Sunrise Bank Limited",
+    "sector": "Commercial Banks"
+  },
+  {
+    "symbol": "CORBL",
+    "name": "Corporate Development Bank Limited",
+    "sector": "Development Bank Limited"
+  },
+  {
+    "symbol": "EDBL",
+    "name": "Excel Development Bank Ltd.",
+    "sector": "Development Bank Limited"
+  },
+  {
+    "symbol": "GBBL",
+    "name": "Garima Bikas Bank Limited",
+    "sector": "Development Bank Limited"
+  },
+  {
+    "symbol": "JBBL",
+    "name": "Jyoti Bikas Bank Limited",
+    "sector": "Development Bank Limited"
+  },
+  {
+    "symbol": "MDB",
+    "name": "Miteri Development Bank Limited",
+    "sector": "Development Bank Limited"
+  },
+  {
+    "symbol": "MNBBL",
+    "name": "Muktinath Bikas Bank Ltd.",
+    "sector": "Development Bank Limited"
+  },
+  {
+    "symbol": "NABBC",
+    "name": "Narayani Development Bank Limited",
+    "sector": "Development Bank Limited"
+  },
+  {
+    "symbol": "SADBL",
+    "name": "Shangrila Development Bank Ltd.",
+    "sector": "Development Bank Limited"
+  },
+  {
+    "symbol": "SHINE",
+    "name": "Shine Resunga Development Bank Ltd.",
+    "sector": "Development Bank Limited"
+  },
+  {
+    "symbol": "SINDU",
+    "name": "Sindhu Bikash Bank Ltd",
+    "sector": "Development Bank Limited"
+  },
+  {
+    "symbol": "GRDBL",
+    "name": "Green Development Bank Ltd.",
+    "sector": "Development Bank Limited"
+  },
+  {
+    "symbol": "SABBL",
+    "name": "Salapa Bikas Bank Limited",
+    "sector": "Development Bank Limited"
+  },
+  {
+    "symbol": "MLBL",
+    "name": "Mahalaxmi Bikas Bank Ltd.",
+    "sector": "Development Bank Limited"
+  },
+  {
+    "symbol": "LBBL",
+    "name": "Lumbini Bikas Bank Ltd.",
+    "sector": "Development Bank Limited"
+  },
+  {
+    "symbol": "KSBBL",
+    "name": "Kamana Sewa Bikas Bank Limited",
+    "sector": "Development Bank Limited"
+  },
+  {
+    "symbol": "SAPDBL",
+    "name": "Saptakoshi Development Bank Ltd",
+    "sector": "Development Bank Limited"
+  },
+  {
+    "symbol": "CFCL",
+    "name": "Central Finance Co. Ltd.",
+    "sector": "Finance"
+  },
+  {
+    "symbol": "GFCL",
+    "name": "Goodwill Finance Co. Ltd.",
+    "sector": "Finance"
+  },
+  {
+    "symbol": "GMFIL",
+    "name": "Guheshowori Merchant Bank & Finance Co. Ltd.",
+    "sector": "Finance"
+  },
+  {
+    "symbol": "ICFC",
+    "name": "ICFC Finance Limited",
+    "sector": "Finance"
+  },
+  {
+    "symbol": "JFL",
+    "name": "Janaki Finance Ltd.",
+    "sector": "Finance"
+  },
+  {
+    "symbol": "MFIL",
+    "name": "Manjushree Finance Ltd.",
+    "sector": "Finance"
+  },
+  {
+    "symbol": "MPFL",
+    "name": "Multipurpose Finance Company Limited",
+    "sector": "Finance"
+  },
+  {
+    "symbol": "NFS",
+    "name": "Nepal Finance Ltd.",
+    "sector": "Finance"
+  },
+  {
+    "symbol": "PFL",
+    "name": "Pokhara Finance Ltd.",
+    "sector": "Finance"
+  },
+  {
+    "symbol": "PROFL",
+    "name": "Progressive Finance Limited",
+    "sector": "Finance"
+  },
+  {
+    "symbol": "SIFC",
+    "name": "Shree Investment Finance Co. Ltd.",
+    "sector": "Finance"
+  },
+  {
+    "symbol": "RLFL",
+    "name": "Reliance Finance Ltd.",
+    "sector": "Finance"
+  },
+  {
+    "symbol": "GUFL",
+    "name": "Gurkhas Finance Ltd.",
+    "sector": "Finance"
+  },
+  {
+    "symbol": "BFC",
+    "name": "Best Finance Company Ltd.",
+    "sector": "Finance"
+  },
+  {
+    "symbol": "SFCL",
+    "name": "Samriddhi Finance Company Limited",
+    "sector": "Finance"
+  },
+  {
+    "symbol": "OHL",
+    "name": "Oriental Hotels Limited",
+    "sector": "Hotels And Tourism"
+  },
+  {
+    "symbol": "SHL",
+    "name": "Soaltee Hotel Limited",
+    "sector": "Hotels And Tourism"
+  },
+  {
+    "symbol": "TRH",
+    "name": "Taragaon Regency Hotel Limited",
+    "sector": "Hotels And Tourism"
+  },
+  {
+    "symbol": "CGH",
+    "name": "Chandragiri Hills Limited",
+    "sector": "Hotels And Tourism"
+  },
+  {
+    "symbol": "KDL",
+    "name": "Kalinchowk Darshan Limited",
+    "sector": "Hotels And Tourism"
+  },
+  {
+    "symbol": "CITY",
+    "name": "City Hotel Limited",
+    "sector": "Hotels And Tourism"
+  },
+  {
+    "symbol": "BANDIPUR",
+    "name": "Bandipur Cablecar and Tourism Limited",
+    "sector": "Hotels And Tourism"
+  },
+  {
+    "symbol": "HFIN",
+    "name": "Hotel Forest Inn Limited",
+    "sector": "Hotels And Tourism"
+  },
+  {
+    "symbol": "AHPC",
+    "name": "Arun Valley Hydropower Development Co. Ltd.",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "BPCL",
+    "name": "Butwal Power Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "CHCL",
+    "name": "Chilime Hydropower Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "NHPC",
+    "name": "National Hydro Power Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "SHPC",
+    "name": "Sanima Mai Hydropower Ltd.",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "HURJA",
+    "name": "Himalaya Urja Bikas Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "AKPL",
+    "name": "Arun Kabeli Power Ltd.",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "BARUN",
+    "name": "Barun Hydropower Co. Ltd.",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "API",
+    "name": "Api Power Company Ltd.",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "NGPL",
+    "name": "Ngadi Group Power Ltd.",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "MHL",
+    "name": "Mandakini Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "NYADI",
+    "name": "Nyadi Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "SJCL",
+    "name": "SANJEN JALAVIDHYUT COMPANY LIMITED",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "RHPL",
+    "name": "RASUWAGADHI HYDROPOWER COMPANY LIMITED",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "UMHL",
+    "name": "United Modi Hydropower Ltd.",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "DORDI",
+    "name": "Dordi Khola Jal Bidyut Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "PHCL",
+    "name": "Peoples Hydropower Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "PPL",
+    "name": "People's Power Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "UPCL",
+    "name": "UNIVERSAL POWER COMPANY LTD",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "SPL",
+    "name": "Shuvam Power Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "SPDL",
+    "name": "Synergy Power Development Ltd.",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "MKJC",
+    "name": "Mailung Khola Jal Vidhyut Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "SAHAS",
+    "name": "Sahas Urja Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "KKHC",
+    "name": "Khanikhola Hydropower Co. Ltd.",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "HPPL",
+    "name": "Himalayan Power Partner Ltd.",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "DHPL",
+    "name": "Dibyashwori Hydropower Ltd.",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "BHPL",
+    "name": "Barahi Hydropower Public Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "MHNL",
+    "name": "Mountain Hydro Nepal Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "CHL",
+    "name": "Chhyangdi Hydropower Ltd.",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "USHL",
+    "name": "Upper Syange Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "SPHL",
+    "name": "Sayapatri Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "NHDL",
+    "name": "Nepal Hydro Developers Ltd.",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "RADHI",
+    "name": "Radhi Bidyut Company Ltd",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "BNHC",
+    "name": "Buddhabhumi Nepal Hydropower Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "RHGCL",
+    "name": "Rapti Hydro and General Construction Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "KPCL",
+    "name": "Kalika power Company Ltd",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "TAMOR",
+    "name": "Sanima Middle Tamor Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "GHL",
+    "name": "Ghalemdi Hydro Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "EHPL",
+    "name": "Eastern Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "MKHC",
+    "name": "Maya Khola Hydropower Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "BEDC",
+    "name": "Bhugol Energy Development Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "PMHPL",
+    "name": "Panchakanya Mai Hydropower Ltd",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "KBSH",
+    "name": "Kutheli Bukhari Small Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "MBJC",
+    "name": "Madhya Bhotekoshi Jalavidyut Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "GLH",
+    "name": "Greenlife Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "USHEC",
+    "name": "Upper Solu Hydro Electric Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "AKJCL",
+    "name": "Ankhu Khola Jalvidhyut Company Ltd",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "LEC",
+    "name": "Liberty Energy Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "TPC",
+    "name": "Terhathum Power Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "SHEL",
+    "name": "Singati Hydro Energy Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "PPCL",
+    "name": "Panchthar Power Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "TSHL",
+    "name": "Three Star Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "SSHL",
+    "name": "Shiva Shree Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "JOSHI",
+    "name": "Joshi Hydropower Development Company Ltd",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "UPPER",
+    "name": "Upper Tamakoshi Hydropower Ltd",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "TVCL",
+    "name": "Trishuli Jal Vidhyut Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "UNHPL",
+    "name": "Union Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "SPC",
+    "name": "Samling Power Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "SGHC",
+    "name": "Swet-Ganga Hydropower & Construction Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "AHL",
+    "name": "Asian Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "BHDC",
+    "name": "Bindyabasini Hydropower Development Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "HDHPC",
+    "name": "Himal Dolakha Hydropower Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "MHCL",
+    "name": "Molung Hydropower Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "SMH",
+    "name": "Super Mai Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "RFPL",
+    "name": "River Falls Power Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "MEN",
+    "name": "Mountain Energy Nepal Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "UHEWA",
+    "name": "Upper Hewakhola Hydropower Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "HHL",
+    "name": "Himalayan Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "UMRH",
+    "name": "United IDI Mardi RB Hydropower Limited.",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "SIKLES",
+    "name": "Sikles Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "MEL",
+    "name": "Modi Energy Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "RURU",
+    "name": "Ru Ru Jalbidhyut Pariyojana Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "MAKAR",
+    "name": "Makar Jitumaya Suri Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "DHEL",
+    "name": "Daramkhola Hydro Energy Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "SMJC",
+    "name": "Sagarmatha Jalabidhyut Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "MKHL",
+    "name": "Mai Khola Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "CKHL",
+    "name": "Chirkhwa Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "MMKJL",
+    "name": "Mathillo Mailun Khola Jalvidhyut Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "DOLTI",
+    "name": "Dolti Power Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "BHL",
+    "name": "Balephi Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "GVL",
+    "name": "Green Ventures Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "MSHL",
+    "name": "Mid-Solu Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "BUNGAL",
+    "name": "Bungal Hydro Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "SGHL",
+    "name": "Sanigad Hydro Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "KAHL",
+    "name": "Kalanga Hydro Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "TPKHL",
+    "name": "Taksar Pikhuwa Khola Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "RIDI",
+    "name": "Ridi Power Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "HIMSTAR",
+    "name": "Him Star Urja Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "MEHL",
+    "name": "Manakamana Engineering Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "APHL",
+    "name": "Appolo Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "IHL",
+    "name": "Ingwa Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "SMHL",
+    "name": "Super Madi Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "MCHL",
+    "name": "Menchhiyam Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "KHPL",
+    "name": "Kalinchock Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "BHCL",
+    "name": "Bikash Hydropower Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "SANVI",
+    "name": "Sanvi Energy Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "YMHL",
+    "name": "Yambaling Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "RAWA",
+    "name": "Rawa Energy Development Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "ULHC",
+    "name": "Upper Lohore Khola Hydropower Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "BGWT",
+    "name": "Bhagawati Hydropower Development Company Ltd.",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "MANDU",
+    "name": "Mandu Hydropower Ltd.",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "MABEL",
+    "name": "Mabilung Energy Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "SIPD",
+    "name": "Shikhar Power Development Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "SNORL",
+    "name": "Snow Rivers Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "VLUCL",
+    "name": "Vision Lumbini Urja Company Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "SKHL",
+    "name": "Super Khudi Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "BJHL",
+    "name": "Bhujung Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "SKHEL",
+    "name": "Suryakunda Hydro Electric Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "RLEL",
+    "name": "Ridge Line Energy Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "MEPDL",
+    "name": "Mount Everest Power Development Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "SOHL",
+    "name": "Solu Hydropower Limited",
+    "sector": "Hydro Power"
+  },
+  {
+    "symbol": "CIT",
+    "name": "Citizen Investment Trust",
+    "sector": "Investment"
+  },
+  {
+    "symbol": "HATHY",
+    "name": "Hathway Investment Nepal Limited",
+    "sector": "Investment"
+  },
+  {
+    "symbol": "HIDCL",
+    "name": "Hydorelectricity Investment and Development Company Ltd",
+    "sector": "Investment"
+  },
+  {
+    "symbol": "NIFRA",
+    "name": "Nepal Infrastructure Bank Limited",
+    "sector": "Investment"
+  },
+  {
+    "symbol": "ENL",
+    "name": "Emerging Nepal Limited",
+    "sector": "Investment"
+  },
+  {
+    "symbol": "NRN",
+    "name": "NRN Infrastructure and Development Limited",
+    "sector": "Investment"
+  },
+  {
+    "symbol": "CHDC",
+    "name": "CEDB Holdings Limited",
+    "sector": "Investment"
+  },
+  {
+    "symbol": "ALICL",
+    "name": "Asian Life Insurance Co. Limited",
+    "sector": "Life Insurance"
+  },
+  {
+    "symbol": "LICN",
+    "name": "Life Insurance Co. Nepal",
+    "sector": "Life Insurance"
+  },
+  {
+    "symbol": "NLIC",
+    "name": "Nepal Life Insurance Co. Ltd.",
+    "sector": "Life Insurance"
+  },
+  {
+    "symbol": "NLICL",
+    "name": "National Life Insurance Co. Ltd.",
+    "sector": "Life Insurance"
+  },
+  {
+    "symbol": "CLI",
+    "name": "Citizen Life Insurance Company Limited",
+    "sector": "Life Insurance"
+  },
+  {
+    "symbol": "RNLI",
+    "name": "Reliable Nepal Life Insurance Limited",
+    "sector": "Life Insurance"
+  },
+  {
+    "symbol": "ILI",
+    "name": "IME Life Insurance Company Limited",
+    "sector": "Life Insurance"
+  },
+  {
+    "symbol": "SNLI",
+    "name": "Sun Nepal Life Insurance Company Limited",
+    "sector": "Life Insurance"
+  },
+  {
+    "symbol": "SJLIC",
+    "name": "SuryaJyoti Life Insurance Company Limited",
+    "sector": "Life Insurance"
+  },
+  {
+    "symbol": "SRLI",
+    "name": "Sanima Reliance Life Insurance Limited",
+    "sector": "Life Insurance"
+  },
+  {
+    "symbol": "HLI",
+    "name": "Himalayan Life Insurance Limited",
+    "sector": "Life Insurance"
+  },
+  {
+    "symbol": "PMLI",
+    "name": "Prabhu Mahalaxmi Life Insurance Limited",
+    "sector": "Life Insurance"
+  },
+  {
+    "symbol": "GMLI",
+    "name": "Guardian Micro-Life Insurance Limited",
+    "sector": "Life Insurance"
+  },
+  {
+    "symbol": "CREST",
+    "name": "Crest Micro Life Insurance Ltd.",
+    "sector": "Life Insurance"
+  },
+  {
+    "symbol": "BNL",
+    "name": "Bottlers Nepal (Balaju) Limited",
+    "sector": "Manufacturing And Processing"
+  },
+  {
+    "symbol": "BNT",
+    "name": "Bottlers Nepal (Terai) Limited",
+    "sector": "Manufacturing And Processing"
+  },
+  {
+    "symbol": "HDL",
+    "name": "Himalayan Distillery Limited",
+    "sector": "Manufacturing And Processing"
+  },
+  {
+    "symbol": "NLO",
+    "name": "Nepal Lube Oil Limited",
+    "sector": "Manufacturing And Processing"
+  },
+  {
+    "symbol": "UNL",
+    "name": "Unilever Nepal Limited",
+    "sector": "Manufacturing And Processing"
+  },
+  {
+    "symbol": "SHIVM",
+    "name": "SHIVAM CEMENTS LTD",
+    "sector": "Manufacturing And Processing"
+  },
+  {
+    "symbol": "SARBTM",
+    "name": "Sarbottam Cement Limited",
+    "sector": "Manufacturing And Processing"
+  },
+  {
+    "symbol": "RSML",
+    "name": "Reliance Spinning Mills Limited",
+    "sector": "Manufacturing And Processing"
+  },
+  {
+    "symbol": "SONA",
+    "name": "Sonapur Minerals and Oil Limited",
+    "sector": "Manufacturing And Processing"
+  },
+  {
+    "symbol": "OMPL",
+    "name": "Om Megashree Pharmaceuticals Limited",
+    "sector": "Manufacturing And Processing"
+  },
+  {
+    "symbol": "GCIL",
+    "name": "Ghorahi Cement Industry Limited",
+    "sector": "Manufacturing And Processing"
+  },
+  {
+    "symbol": "SAGAR",
+    "name": "Sagar Distillery Limited",
+    "sector": "Manufacturing And Processing"
+  },
+  {
+    "symbol": "SAIL",
+    "name": "Shreenagar Agritech Industries Limited",
+    "sector": "Manufacturing And Processing"
+  },
+  {
+    "symbol": "SYPNL",
+    "name": "SY Panel Nepal Limited",
+    "sector": "Manufacturing And Processing"
+  },
+  {
+    "symbol": "ECL",
+    "name": "Everest Colour Limited",
+    "sector": "Manufacturing And Processing"
+  },
+  {
+    "symbol": "SOPL",
+    "name": "Sopan Pharmaceuticals Limited",
+    "sector": "Manufacturing And Processing"
+  },
+  {
+    "symbol": "SAPIL",
+    "name": "Sarvottam Paints Industries Limited",
+    "sector": "Manufacturing And Processing"
+  },
+  {
+    "symbol": "PCIL",
+    "name": "Palpa Cement Industries Limited",
+    "sector": "Manufacturing And Processing"
+  },
+  {
+    "symbol": "CBBL",
+    "name": "Chhimek Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "DDBL",
+    "name": "Deprosc Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "FMDBL",
+    "name": "First Micro Finance Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "KMCDB",
+    "name": "Kalika Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "NUBL",
+    "name": "Nirdhan Utthan Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "SKBBL",
+    "name": "Sana Kisan Bikas Laghubitta Bittiya sanstha Limited.",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "SLBBL",
+    "name": "Swarojgar Laghubitta Bittiya Sanstha Ltd.",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "SWBBL",
+    "name": "Swabalamban Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "MLBBL",
+    "name": "Mithila Laghubitta Bittiya Sanstha Ltd.",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "LLBS",
+    "name": "Laxmi Laghubitta Bittiya Sanstha Ltd.",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "JSLBB",
+    "name": "Janautthan Samudayic Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "VLBS",
+    "name": "Vijaya laghubitta Bittiya Sanstha Ltd.",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "RSDC",
+    "name": "RSDC Laghubitta Bittiya Sanstha Ltd.",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "NMBMF",
+    "name": "NMB Laghubitta Bittiya Sanstha Ltd.",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "MERO",
+    "name": "Meromicrofinance Laghubitta Bittiya Sanstha Ltd.",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "NADEP",
+    "name": "Nadep Laghubitta Bittiya Sanstha Ltd.",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "ALBSL",
+    "name": "Asha Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "NMFBS",
+    "name": "National Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "GMFBS",
+    "name": "Ganapati Microfinance Bittiya Sanstha Ltd",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "HLBSL",
+    "name": "Himalayan Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "ILBS",
+    "name": "Infinity Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "FOWAD",
+    "name": "Forward Microfinance Laghubitta Bittiya Sanstha Ltd.",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "SMATA",
+    "name": "Samata Gharelu Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "MSLB",
+    "name": "Mahuli Laghubitta Bittiya Sanstha Ltd.",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "GILB",
+    "name": "Global IME Laghubitta Bittiya Sanstha Ltd.",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "SMB",
+    "name": "Support Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "GBLBS",
+    "name": "Grameen Bikas Laghubitta Bittiya Sanstha Ltd.",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "NESDO",
+    "name": "NESDO Sambridha Laghubitta Bittiye Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "MLBSL",
+    "name": "Mahila Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "GLBSL",
+    "name": "Gurans Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "NICLBSL",
+    "name": "NIC Asia Laghubitta Biitiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "SLBSL",
+    "name": "Samudayik Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "UNLB",
+    "name": "Unique Nepal Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "SWASTIK",
+    "name": "Swastik Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "JBLB",
+    "name": "Jeevan Bikas Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "SHLB",
+    "name": "Shrijanshil Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "ULBSL",
+    "name": "Upakar Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "SMFBS",
+    "name": "Swabhimaan Laghubitta Bittiya Sanstha Ltd",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "WNLB",
+    "name": "WEAN Nepal Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "DLBS",
+    "name": "Dhaulagiri Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "ANLB",
+    "name": "Aatmanirbhar Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "MLBS",
+    "name": "Manushi Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "AVYAN",
+    "name": "Aviyan Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "ACLBSL",
+    "name": "Aarambha Chautari Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "USLB",
+    "name": "Unnati Sahakarya Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "CYCL",
+    "name": "CYC Nepal Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "SWMF",
+    "name": "Suryodaya Womi Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "NMLBBL",
+    "name": "Nerude Mirmire Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "MATRI",
+    "name": "Matribhumi Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "SMPDA",
+    "name": "Sampada Laghubitta Bittiya Sanstha Limited",
+    "sector": "Microfinance"
+  },
+  {
+    "symbol": "NICL",
+    "name": "Nepal Insurance Co. Ltd.",
+    "sector": "Non-Life Insurance"
+  },
+  {
+    "symbol": "NIL",
+    "name": "Neco Insurance Co. Ltd.",
+    "sector": "Non-Life Insurance"
+  },
+  {
+    "symbol": "NLG",
+    "name": "NLG Insurance Company Ltd.",
+    "sector": "Non-Life Insurance"
+  },
+  {
+    "symbol": "SICL",
+    "name": "Shikhar Insurance Co. Ltd.",
+    "sector": "Non-Life Insurance"
+  },
+  {
+    "symbol": "PRIN",
+    "name": "Prabhu Insurance Ltd.",
+    "sector": "Non-Life Insurance"
+  },
+  {
+    "symbol": "RBCL",
+    "name": "Rastriya Beema Company Limited",
+    "sector": "Non-Life Insurance"
+  },
+  {
+    "symbol": "IGI",
+    "name": "IGI Prudential Insurance Company Limited",
+    "sector": "Non-Life Insurance"
+  },
+  {
+    "symbol": "HEI",
+    "name": "Himalayan Everest Insurance Limited",
+    "sector": "Non-Life Insurance"
+  },
+  {
+    "symbol": "SGIC",
+    "name": "Sanima GIC Insurance Limited",
+    "sector": "Non-Life Insurance"
+  },
+  {
+    "symbol": "SPIL",
+    "name": "Siddhartha Premier Insurance Limited",
+    "sector": "Non-Life Insurance"
+  },
+  {
+    "symbol": "SALICO",
+    "name": "Sagarmatha Lumbini Insurance Co. Limited",
+    "sector": "Non-Life Insurance"
+  },
+  {
+    "symbol": "UAIL",
+    "name": "United Ajod Insurance Limited",
+    "sector": "Non-Life Insurance"
+  },
+  {
+    "symbol": "NMIC",
+    "name": "Nepal Micro Insurance Co. Ltd.",
+    "sector": "Non-Life Insurance"
+  },
+  {
+    "symbol": "NTC",
+    "name": "Nepal Doorsanchar Comapany Limited",
+    "sector": "Others"
+  },
+  {
+    "symbol": "NRIC",
+    "name": "Nepal Re-Insurance Company Limited",
+    "sector": "Others"
+  },
+  {
+    "symbol": "HRL",
+    "name": "Himalayan Reinsurance Limited",
+    "sector": "Others"
+  },
+  {
+    "symbol": "MKCL",
+    "name": "Muktinath Krishi Company Limited",
+    "sector": "Others"
+  },
+  {
+    "symbol": "TTL",
+    "name": "Trade Tower Limited",
+    "sector": "Others"
+  },
+  {
+    "symbol": "JHAPA",
+    "name": "Jhapa Energy Limited",
+    "sector": "Others"
+  },
+  {
+    "symbol": "NRM",
+    "name": "Nepal Republic Media Limited",
+    "sector": "Others"
+  },
+  {
+    "symbol": "PURE",
+    "name": "Pure Energy Ltd.",
+    "sector": "Others"
+  },
+  {
+    "symbol": "NWCL",
+    "name": "Nepal Warehousing Company Limited",
+    "sector": "Others"
+  },
+  {
+    "symbol": "NABILP",
+    "name": "NABIL Bank Limited Promotor Share",
+    "sector": "Promotor Share"
+  },
+  {
+    "symbol": "SMFBSP",
+    "name": "Swabhimaan Laghubitta Bittiya sanstha Limited",
+    "sector": "Promotor Share"
+  },
+  {
+    "symbol": "AVYANP",
+    "name": "Aviyan Laghubitta Bittiya Sanstha Limited Promotor Share",
+    "sector": "Promotor Share"
+  },
+  {
+    "symbol": "SJLICP",
+    "name": "Suryajyoti Life Insurance Co. Ltd. Promotor Share",
+    "sector": "Promotor Share"
+  },
+  {
+    "symbol": "PMLIP",
+    "name": "Prabhu Mahalaxmi Life Insurance Limited promotor",
+    "sector": "Promotor Share"
+  },
+  {
+    "symbol": "BBC",
+    "name": "Bishal Bazar Company Limited",
+    "sector": "Tradings"
+  },
+  {
+    "symbol": "STC",
+    "name": "Salt Trading Corporation",
+    "sector": "Tradings"
+  }
+]
