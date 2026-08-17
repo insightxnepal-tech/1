@@ -301,6 +301,17 @@ class TestTelegramFormatting(unittest.TestCase):
         self.assertIn("JBBL", msg)
         self.assertIn("P/L", msg)
 
+    def test_near_misses_are_listed(self):
+        df = make_ohlcv()
+        entry = cs.evaluate_latest(df, "NABIL")
+        miss = cs.evaluate_latest(make_ohlcv(high_volume=False), "LSL")
+        msg = cs.format_telegram(
+            [entry], [], scanned=2, as_of="2026-08-16", near_misses=[miss]
+        )
+        self.assertIn("NEAR MISS", msg)
+        self.assertIn("LSL", msg)
+        self.assertIn("volume", msg.lower())
+
     def test_empty_scan_still_mentions_entry_and_exit(self):
         msg = cs.format_telegram([], [], scanned=10, as_of="2026-08-16", skipped=2)
         self.assertIn("ENTRY FOUND:* none", msg)

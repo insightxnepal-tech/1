@@ -518,12 +518,30 @@ def resolve_scripts(
 
 
 # ── Telegram / reports ────────────────────────────────────────────
+def _missing_rules(s) -> list[str]:
+    above_200 = s.above_200 if hasattr(s, "above_200") else s.get("above_200")
+    rsi_dip = s.rsi_dip if hasattr(s, "rsi_dip") else s.get("rsi_dip")
+    green_near_20 = s.green_near_20 if hasattr(s, "green_near_20") else s.get("green_near_20")
+    volume_ok = s.volume_ok if hasattr(s, "volume_ok") else s.get("volume_ok")
+    missing = []
+    if not above_200:
+        missing.append("below 200 EMA")
+    if not rsi_dip:
+        missing.append("RSI not 38–48")
+    if not green_near_20:
+        missing.append("no green 20 EMA bounce")
+    if not volume_ok:
+        missing.append("volume ≤ MA20")
+    return missing
+
+
 def format_telegram(
     entries: list[CandleSignal],
     exits: list[tuple[CandleSignal, dict]],
     scanned: int,
     as_of: str,
     skipped: int = 0,
+    near_misses: Optional[list] = None,
 ) -> str:
     lines = [f"🕯️ *Daily Candle Scan — {as_of}*", ""]
 
@@ -562,6 +580,23 @@ def format_telegram(
     else:
         lines.append("🛑 *EXIT FOUND:* none")
         lines.append("")
+
+    if near_misses:
+        lines.append(f"🟡 *NEAR MISS ({len(near_misses)} — 3 of 4 rules)*")
+        lines.append("")
+        for s in near_misses:
+            if isinstance(s, dict):
+                symbol = s.get("symbol", "")
+                close = float(s.get("close") or 0)
+                rsi = float(s.get("rsi") or 0)
+            else:
+                symbol = s.symbol
+                close = s.close
+                rsi = s.rsi
+            missing = _missing_rules(s)
+            lines.append(f"• *{symbol}* @ Rs {close:.2f} | RSI {rsi:.1f}")
+            lines.append(f"  Missing: {', '.join(missing)}")
+            lines.append("")
 
     lines.append(f"_Scanned {scanned} stocks ({skipped} skipped, need {MIN_HISTORY}+ days)._")
     lines.append("_Not financial advice._")
@@ -661,10 +696,84 @@ def send_telegram(text: str, token: str = "", chat_id: str = "") -> bool:
             )
             print(f"Telegram status {res.status_code}: {res.text[:200]}")
             if res.status_code != 200:
-                ok = False
+                # Underscores in names can break legacy Markdown; retry plain.
+                res = requests.post(
+                    url,
+                    json={"chat_id": chat_id, "text": chunk},
+                    timeout=20,
+                )
+                print(f"Telegram plain status {res.status_code}: {res.text[:200]}")
+                if res.status_code != 200:
+                    ok = False
         except Exception as e:
             print(f"Telegram send error: {e}")
             ok = False
+    return ok
+
+
+def send_telegram_document(
+    path: str,
+    caption: str = "",
+    token: str = "",
+    chat_id: str = "",
+) -> bool:
+    token = token or TELEGRAM_TOKEN
+    chat_id = chat_id or TELEGRAM_CHAT_ID
+    if not token or not chat_id or not os.path.exists(path):
+        return False
+    url = f"https://api.telegram.org/bot{token}/sendDocument"
+    try:
+        with open(path, "rb") as f:
+            res = requests.post(
+                url,
+                data={"chat_id": chat_id, "caption": caption[:1024]},
+                files={"document": (os.path.basename(path), f, "text/markdown")},
+                timeout=30,
+            )
+        print(f"Telegram document status {res.status_code}: {res.text[:200]}")
+        return res.status_code == 200
+    except Exception as e:
+        print(f"Telegram document error: {e}")
+        return False
+
+
+def telegram_text_from_payload(payload: dict) -> str:
+    msg = payload.get("message") or ""
+    near = payload.get("near_misses") or []
+    if not near:
+        return msg
+    # Rebuild so the chat gets entries + near misses, not just the short summary.
+    entries = []
+    for raw in payload.get("entries") or []:
+        entries.append(CandleSignal(**{k: v for k, v in raw.items() if k in CandleSignal.__dataclass_fields__}))
+    exits = []
+    for item in payload.get("exits") or []:
+        raw = item.get("signal") or item
+        sig = CandleSignal(**{k: v for k, v in raw.items() if k in CandleSignal.__dataclass_fields__})
+        exits.append((sig, item.get("position") or {}))
+    return format_telegram(
+        entries,
+        exits,
+        scanned=payload.get("scanned") or 0,
+        as_of=payload.get("as_of") or "?",
+        skipped=payload.get("skipped") or 0,
+        near_misses=near,
+    )
+
+
+def send_latest_report() -> bool:
+    payload = load_latest_scan()
+    if not payload:
+        print(f"No scan to send: {LATEST_FILE} missing or empty.")
+        return False
+    text = telegram_text_from_payload(payload)
+    ok = send_telegram(text)
+    caption = f"NEPSE daily candle scan — {payload.get('as_of', '')}"
+    ok_doc = send_telegram_document(REPORT_FILE, caption=caption)
+    if not ok:
+        print("Telegram message delivery failed.")
+    if not ok_doc:
+        print("Telegram document delivery failed (message may still have been sent).")
     return ok
 
 
@@ -813,8 +922,14 @@ def run_scan(
     elif all_signals:
         as_of = all_signals[0].date
 
+    near_misses = [s for s in all_signals if not s.entry and s.passed_count == 3]
     msg = format_telegram(
-        entries, exits, scanned=len(ohlcv_by_symbol), as_of=as_of, skipped=skipped
+        entries,
+        exits,
+        scanned=len(ohlcv_by_symbol),
+        as_of=as_of,
+        skipped=skipped,
+        near_misses=near_misses,
     )
     report = format_markdown_report(
         entries,
@@ -847,10 +962,6 @@ def run_scan(
     }
 
     telegram_ok = True
-    if send:
-        telegram_ok = send_telegram(msg)
-    payload["telegram_ok"] = telegram_ok
-
     if persist:
         save_json(POSITIONS_FILE, new_positions)
         save_json(LATEST_FILE, {k: v for k, v in payload.items() if k != "report"})
@@ -861,6 +972,12 @@ def run_scan(
         with open(REPORT_FILE, "w") as f:
             f.write(report)
         print(f"Saved {POSITIONS_FILE}, {LATEST_FILE}, {UNIVERSE_FILE}, {REPORT_FILE}")
+
+    if send:
+        telegram_ok = send_telegram(msg)
+        caption = f"NEPSE daily candle scan — {as_of}"
+        send_telegram_document(REPORT_FILE, caption=caption)
+    payload["telegram_ok"] = telegram_ok
 
     return payload
 
@@ -885,6 +1002,11 @@ def main(argv: Optional[list[str]] = None) -> int:
         help="Comma-separated symbols to scan (overrides --all / portfolio)",
     )
     parser.add_argument(
+        "--send-latest",
+        action="store_true",
+        help="Send the saved candle_scan_latest.json report to Telegram and exit",
+    )
+    parser.add_argument(
         "--no-telegram",
         action="store_true",
         help="Do not send Telegram (print only)",
@@ -901,6 +1023,9 @@ def main(argv: Optional[list[str]] = None) -> int:
         help="Parallel merolagani fetches",
     )
     args = parser.parse_args(argv)
+
+    if args.send_latest:
+        return 0 if send_latest_report() else 1
 
     only = [s for s in args.symbols.split(",") if s.strip()] or None
     payload = run_scan(

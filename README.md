@@ -32,7 +32,11 @@ Outputs:
 - `candle_universe.json` — listed ordinary equities used for the run
 - `candle_positions.json` — open paper positions (empty until an ENTRY fires)
 
-Optional Telegram: set `TELEGRAM_TOKEN` and `TELEGRAM_CHAT_ID`, then omit `--no-telegram`.
+Optional Telegram: set `TELEGRAM_TOKEN` and `TELEGRAM_CHAT_ID`, then omit `--no-telegram`. To resend the last saved report without scanning again:
+
+```bash
+python candle_scanner.py --send-latest
+```
 
 ## Tests
 
