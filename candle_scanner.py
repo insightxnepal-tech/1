@@ -682,8 +682,11 @@ def format_markdown_report(
 def send_telegram(text: str, token: str = "", chat_id: str = "") -> bool:
     token = token or TELEGRAM_TOKEN
     chat_id = chat_id or TELEGRAM_CHAT_ID
-    if not token or not chat_id:
-        print("Telegram skipped: TELEGRAM_TOKEN or TELEGRAM_CHAT_ID not set.")
+    if not token:
+        print("Telegram skipped: TELEGRAM_TOKEN not set. Chat id is ready; add a live BotFather token to send.")
+        return False
+    if not chat_id:
+        print("Telegram skipped: TELEGRAM_CHAT_ID not set.")
         return False
     url = f"https://api.telegram.org/bot{token}/sendMessage"
     ok = True

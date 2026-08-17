@@ -1,12 +1,35 @@
 {
   "as_of": "2026-08-18",
-  "generated_at": "2026-08-17T10:49:12Z",
+  "generated_at": "2026-08-17T11:08:02Z",
   "listed": 582,
   "universe": 287,
   "skipped_non_equity": 295,
   "scanned": 251,
   "skipped": 36,
   "entries": [
+    {
+      "symbol": "HLBSL",
+      "date": "2026-08-18",
+      "open": 870.0,
+      "high": 894.9,
+      "low": 860.1,
+      "close": 894.9,
+      "volume": 2618.0,
+      "ema20": 880.71,
+      "ema200": 894.42,
+      "rsi": 54.8,
+      "vol_ma20": 1130.0,
+      "atr": 21.63,
+      "above_200": true,
+      "rsi_dip": true,
+      "green_near_20": true,
+      "volume_ok": true,
+      "entry": true,
+      "exit_reasons": [],
+      "name": "Himalayan Laghubitta Bittiya Sanstha Limited",
+      "sector": "Microfinance",
+      "bars": 683
+    },
     {
       "symbol": "MBL",
       "date": "2026-08-18",
@@ -56,31 +79,9 @@
       "name": "SHIVAM CEMENTS LTD",
       "sector": "Manufacturing And Processing",
       "bars": 684
-    },
-    {
-      "symbol": "HLBSL",
-      "date": "2026-08-18",
-      "open": 870.0,
-      "high": 894.9,
-      "low": 860.1,
-      "close": 894.9,
-      "volume": 2618.0,
-      "ema20": 880.71,
-      "ema200": 894.42,
-      "rsi": 54.8,
-      "vol_ma20": 1130.0,
-      "atr": 21.63,
-      "above_200": true,
-      "rsi_dip": true,
-      "green_near_20": true,
-      "volume_ok": true,
-      "entry": true,
-      "exit_reasons": [],
-      "name": "Himalayan Laghubitta Bittiya Sanstha Limited",
-      "sector": "Microfinance",
-      "bars": 683
     }
   ],
+  "new_paper_entries": [],
   "exits": [],
   "near_misses": [
     {
@@ -7043,6 +7044,5 @@
       "rsi": 54.8
     }
   },
-  "message": "\ud83d\udd6f\ufe0f *Daily Candle Scan \u2014 2026-08-18*\n\n\ud83d\udfe2 *ENTRY FOUND (3)*\n_Price > 200 EMA \u00b7 RSI 38\u201348 \u00b7 green 20 EMA bounce \u00b7 vol > MA20_\n\n\u2022 *MBL* @ Rs 250.00\n  200 EMA 242.20 | 20 EMA 253.47 | RSI 44.8\n  Vol 1.4\u00d7 MA20 | O 248.00 H 251.00 L 246.10\n\n\u2022 *SHIVM* @ Rs 629.70\n  200 EMA 629.29 | 20 EMA 638.08 | RSI 40.3\n  Vol 1.0\u00d7 MA20 | O 599.50 H 645.00 L 599.50\n\n\u2022 *HLBSL* @ Rs 894.90\n  200 EMA 894.42 | 20 EMA 880.71 | RSI 54.8\n  Vol 2.3\u00d7 MA20 | O 870.00 H 894.90 L 860.10\n\n\ud83d\uded1 *EXIT FOUND:* none\n\n_Scanned 285 stocks (34 skipped, need 200+ days)._\n_Not financial advice._\n",
-  "telegram_ok": true
+  "message": "\ud83d\udd6f\ufe0f *Daily Candle Scan \u2014 2026-08-18*\n\n\ud83d\udfe2 *ENTRY FOUND (3)*\n_Price > 200 EMA \u00b7 RSI 38\u201348 \u00b7 green 20 EMA bounce \u00b7 vol > MA20_\n\n\u2022 *HLBSL* @ Rs 894.90\n  200 EMA 894.42 | 20 EMA 880.71 | RSI 54.8\n  Vol 2.3\u00d7 MA20 | O 870.00 H 894.90 L 860.10\n\n\u2022 *MBL* @ Rs 250.00\n  200 EMA 242.20 | 20 EMA 253.47 | RSI 44.8\n  Vol 1.4\u00d7 MA20 | O 248.00 H 251.00 L 246.10\n\n\u2022 *SHIVM* @ Rs 629.70\n  200 EMA 629.29 | 20 EMA 638.08 | RSI 40.3\n  Vol 1.0\u00d7 MA20 | O 599.50 H 645.00 L 599.50\n\n\ud83d\uded1 *EXIT FOUND:* none\n\n\ud83d\udfe1 *NEAR MISS (22 \u2014 3 of 4 rules)*\n\n\u2022 *GBIME* @ Rs 249.00 | RSI 47.8\n  Missing: no green 20 EMA bounce\n\n\u2022 *PCBL* @ Rs 244.60 | RSI 60.6\n  Missing: RSI not 38\u201348\n\n\u2022 *LSL* @ Rs 220.40 | RSI 45.5\n  Missing: volume \u2264 MA20\n\n\u2022 *GRDBL* @ Rs 1048.90 | RSI 46.2\n  Missing: below 200 EMA\n\n\u2022 *TRH* @ Rs 825.00 | RSI 64.8\n  Missing: RSI not 38\u201348\n\n\u2022 *NHPC* @ Rs 266.00 | RSI 44.5\n  Missing: volume \u2264 MA20\n\n\u2022 *UMHL* @ Rs 588.80 | RSI 55.4\n  Missing: RSI not 38\u201348\n\n\u2022 *SAHAS* @ Rs 684.00 | RSI 67.7\n  Missing: RSI not 38\u201348\n\n\u2022 *DHPL* @ Rs 290.50 | RSI 50.3\n  Missing: below 200 EMA\n\n\u2022 *TAMOR* @ Rs 469.00 | RSI 69.9\n  Missing: RSI not 38\u201348\n\n\u2022 *USHEC* @ Rs 505.00 | RSI 61.8\n  Missing: RSI not 38\u201348\n\n\u2022 *UPPER* @ Rs 192.50 | RSI 43.6\n  Missing: below 200 EMA\n\n\u2022 *SANVI* @ Rs 614.00 | RSI 52.4\n  Missing: below 200 EMA\n\n\u2022 *ALICL* @ Rs 421.60 | RSI 41.3\n  Missing: below 200 EMA\n\n\u2022 *HDL* @ Rs 1179.00 | RSI 62.0\n  Missing: RSI not 38\u201348\n\n\u2022 *SKBBL* @ Rs 749.90 | RSI 42.9\n  Missing: below 200 EMA\n\n\u2022 *SLBBL* @ Rs 807.00 | RSI 51.2\n  Missing: below 200 EMA\n\n\u2022 *JBLB* @ Rs 1276.00 | RSI 54.9\n  Missing: below 200 EMA\n\n\u2022 *ULBSL* @ Rs 2710.00 | RSI 43.3\n  Missing: below 200 EMA\n\n\u2022 *SICL* @ Rs 610.40 | RSI 42.9\n  Missing: below 200 EMA\n\n\u2022 *NTC* @ Rs 895.00 | RSI 75.7\n  Missing: RSI not 38\u201348\n\n\u2022 *STC* @ Rs 5170.00 | RSI 45.1\n  Missing: no green 20 EMA bounce\n\n_Scanned 285 stocks (34 skipped, need 200+ days)._\n_Not financial advice._\n"
 }
