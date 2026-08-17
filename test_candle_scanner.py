@@ -382,6 +382,18 @@ class TestUniverse(unittest.TestCase):
         self.assertIn("NABIL", report)
         self.assertIn("ENTRY", report)
 
+    def test_telegram_report_lists_matching_setups(self):
+        sig = cs.evaluate_latest(make_ohlcv(), "MBL")
+        text = cs.format_telegram([sig], [], scanned=251, as_of="2026-08-18")
+        self.assertIn("MBL", text)
+        self.assertIn("ENTRY FOUND", text)
+
+
+class TestTelegramConfig(unittest.TestCase):
+    def test_default_chat_id(self):
+        self.assertTrue(cs.TELEGRAM_CHAT_ID)
+
+
 
 class TestJsonRoundtrip(unittest.TestCase):
     def test_load_save_positions(self):

@@ -56,7 +56,8 @@ UNIVERSE_FILE = os.getenv("CANDLE_UNIVERSE_FILE", "candle_universe.json")
 PORTFOLIO_FILE = os.getenv("PORTFOLIO_FILE", "portfolio_data.json")
 
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN", "")
-TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "")
+# Default is the InsightX Nepal alert chat used by NEPAPI. Override with env.
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "8563709547")
 
 MEROLAGANI_ORIGIN = "https://merolagani.com"
 COMPANY_LIST_URL = f"{MEROLAGANI_ORIGIN}/CompanyList.aspx"
@@ -880,6 +881,7 @@ def run_scan(
     send: bool = True,
     persist: bool = True,
     workers: int = MAX_WORKERS,
+    fresh: bool = False,
 ) -> dict:
     session = http_session()
     listed = fetch_listed_scripts(session)
@@ -888,7 +890,7 @@ def run_scan(
     )
     universe = resolve_scripts(scan_all=scan_all, only=symbols, listed=listed)
     meta = {s.symbol: s for s in listed}
-    positions = load_positions()
+    positions = {} if fresh or os.getenv("CANDLE_FRESH", "") == "1" else load_positions()
     for held in positions:
         if held not in meta:
             universe.append(ListedScript(symbol=held, name=held))
@@ -923,8 +925,10 @@ def run_scan(
         as_of = all_signals[0].date
 
     near_misses = [s for s in all_signals if not s.entry and s.passed_count == 3]
+    # Telegram/report list every script that matches today, even if already held.
+    setups = sorted([s for s in all_signals if s.entry], key=lambda s: s.symbol)
     msg = format_telegram(
-        entries,
+        setups,
         exits,
         scanned=len(ohlcv_by_symbol),
         as_of=as_of,
@@ -932,7 +936,7 @@ def run_scan(
         near_misses=near_misses,
     )
     report = format_markdown_report(
-        entries,
+        setups,
         exits,
         all_signals,
         scanned=len(ohlcv_by_symbol) - skipped,
@@ -952,7 +956,8 @@ def run_scan(
         "skipped_non_equity": skipped_non_equity,
         "scanned": len(ohlcv_by_symbol) - skipped,
         "skipped": skipped + (len(universe) - len(ohlcv_by_symbol)),
-        "entries": [asdict(s) for s in entries],
+        "entries": [asdict(s) for s in setups],
+        "new_paper_entries": [asdict(s) for s in entries],
         "exits": [{"signal": asdict(s), "position": pos} for s, pos in exits],
         "near_misses": [asdict(s) for s in all_signals if not s.entry and s.passed_count == 3],
         "signals": [asdict(s) for s in sorted(all_signals, key=lambda x: x.symbol)],
@@ -1007,6 +1012,11 @@ def main(argv: Optional[list[str]] = None) -> int:
         help="Send the saved candle_scan_latest.json report to Telegram and exit",
     )
     parser.add_argument(
+        "--fresh",
+        action="store_true",
+        help="Ignore candle_positions.json so today's matching setups are treated as new entries",
+    )
+    parser.add_argument(
         "--no-telegram",
         action="store_true",
         help="Do not send Telegram (print only)",
@@ -1034,6 +1044,7 @@ def main(argv: Optional[list[str]] = None) -> int:
         send=not args.no_telegram,
         persist=not args.no_persist,
         workers=args.workers,
+        fresh=args.fresh,
     )
     if not args.no_telegram and not payload.get("telegram_ok", False):
         print("Telegram delivery failed.")

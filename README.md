@@ -32,11 +32,14 @@ Outputs:
 - `candle_universe.json` — listed ordinary equities used for the run
 - `candle_positions.json` — open paper positions (empty until an ENTRY fires)
 
-Optional Telegram: set `TELEGRAM_TOKEN` and `TELEGRAM_CHAT_ID`, then omit `--no-telegram`. To resend the last saved report without scanning again:
+Optional Telegram: set `TELEGRAM_TOKEN` (BotFather) and optionally `TELEGRAM_CHAT_ID` (defaults to `8563709547`), then omit `--no-telegram`. To resend the last saved report without scanning again:
 
 ```bash
+export TELEGRAM_TOKEN='<bot token>'
 python candle_scanner.py --send-latest
 ```
+
+The report lists **every ordinary NEPSE script that matches today**, plus exits and near-misses (3 of 4 rules). GitHub Action `NEPSE candle scan → Telegram` can run the same job after market close if those secrets are set on this repo.
 
 ## Tests
 
