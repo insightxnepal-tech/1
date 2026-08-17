@@ -326,8 +326,8 @@ _SECTOR_RE = re.compile(
 )
 
 
-def _is_ordinary_equity(symbol: str, name: str = "") -> bool:
-    text = f"{symbol} {name}"
+def _is_ordinary_equity(symbol: str, name: str = "", sector: str = "") -> bool:
+    text = f"{symbol} {name} {sector}"
     if any(s.lower() in text.lower() for s in SKIP_NAME_FRAGMENTS):
         return False
     if symbol.upper().endswith("PO"):
@@ -398,18 +398,23 @@ def merolagani_chart_to_ohlcv(data: dict) -> pd.DataFrame:
     if str(data.get("s") or "").lower() == "no_data":
         return pd.DataFrame()
     needed = {"t", "o", "h", "l", "c", "v"}
-    if not needed.issubset(data.keys()):
-        return pd.DataFrame()
-    if not data["t"]:
+    if not needed.issubset(data.keys()) or not data["t"]:
         return pd.DataFrame()
     timestamps = pd.to_datetime(data["t"], unit="s", utc=True)
     try:
-        business = timestamps.dt.tz_convert("Asia/Kathmandu").dt.tz_localize(None)
-    except (TypeError, ValueError, OverflowError):
-        business = timestamps.dt.tz_localize(None)
+        if isinstance(timestamps, pd.Series):
+            business = timestamps.dt.tz_convert("Asia/Kathmandu").dt.tz_localize(None)
+        else:
+            business = timestamps.tz_convert("Asia/Kathmandu").tz_localize(None)
+    except (TypeError, ValueError, OverflowError, AttributeError):
+        business = timestamps.tz_localize(None) if getattr(timestamps, "tz", None) else timestamps
+    if isinstance(business, pd.Series):
+        business_dates = business.dt.normalize()
+    else:
+        business_dates = business.normalize()
     df = pd.DataFrame(
         {
-            "businessDate": business.dt.normalize(),
+            "businessDate": business_dates,
             "open": data["o"],
             "high": data["h"],
             "low": data["l"],
@@ -417,8 +422,7 @@ def merolagani_chart_to_ohlcv(data: dict) -> pd.DataFrame:
             "volume": data["v"],
         }
     )
-    df = df.drop_duplicates("businessDate").sort_values("businessDate")
-    return df
+    return df.drop_duplicates("businessDate").sort_values("businessDate")
 
 
 def history_to_ohlcv(rows: list[dict]) -> pd.DataFrame:
@@ -504,7 +508,9 @@ def resolve_scripts(
     if not listed:
         listed = []
     if scan_all:
-        return [s for s in listed if _is_ordinary_equity(s.symbol, s.name)]
+        return [
+            s for s in listed if _is_ordinary_equity(s.symbol, s.name, s.sector)
+        ]
     portfolio = set(load_portfolio_symbols())
     return [s for s in listed if s.symbol in portfolio] or [
         ListedScript(symbol=sym, name=sym) for sym in portfolio
@@ -769,7 +775,7 @@ def run_scan(
     session = http_session()
     listed = fetch_listed_scripts(session)
     skipped_non_equity = sum(
-        1 for s in listed if not _is_ordinary_equity(s.symbol, s.name)
+        1 for s in listed if not _is_ordinary_equity(s.symbol, s.name, s.sector)
     )
     universe = resolve_scripts(scan_all=scan_all, only=symbols, listed=listed)
     meta = {s.symbol: s for s in listed}

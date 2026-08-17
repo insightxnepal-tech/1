@@ -356,7 +356,7 @@ class TestUniverse(unittest.TestCase):
         self.assertEqual(by_symbol["NABIL"].sector, "Commercial Banks")
         self.assertTrue(cs._is_ordinary_equity("NABIL", "Nabil Bank Limited"))
         self.assertFalse(cs._is_ordinary_equity("NABILP", "Nabil Bank Limited Promoter Share"))
-        self.assertFalse(cs._is_ordinary_equity("ADBLD83", "10.35% Agricultural Bank Debenture 2083"))
+        self.assertFalse(cs._is_ordinary_equity("NIBSF1", "NIBL Samriddhi Fund 1", "Mutual Fund"))
         ordinary = cs.resolve_scripts(scan_all=True, only=None, listed=listed)
         self.assertEqual([s.symbol for s in ordinary], ["NABIL"])
 
