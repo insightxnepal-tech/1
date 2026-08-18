@@ -736,9 +736,11 @@ def run_accuracy(
     }
 
     if persist:
-        slim = {k: v for k, v in payload.items() if k not in {"buy_events", "sell_events", "report"}}
-        slim["buy_events"] = payload["buy_events"]
-        slim["sell_events"] = payload["sell_events"]
+        slim = {
+            k: v
+            for k, v in payload.items()
+            if k not in {"buy_events", "sell_events", "report"}
+        }
         cs.save_json(ACCURACY_JSON, slim)
         with open(ACCURACY_REPORT, "w") as f:
             f.write(report)
