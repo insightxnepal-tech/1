@@ -1,3 +1,4 @@
+data/ohlcv/
 .venv/
 __pycache__/
 *.py[cod]

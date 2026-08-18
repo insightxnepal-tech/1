@@ -171,16 +171,21 @@ def _near_distance(price: float, atr: float) -> float:
     return max(price * NEAR_PCT, atr_part, price * 0.005)
 
 
-def evaluate_latest(df: pd.DataFrame, symbol: str = "") -> Optional[CandleSignal]:
-    """Apply the manual candle loop to the last row of an indicator frame."""
+def evaluate_bar(df: pd.DataFrame, idx: int, symbol: str = "") -> Optional[CandleSignal]:
+    """Apply the candle loop to one bar of an indicator frame (idx may be negative)."""
     if df is None or len(df) < MIN_HISTORY:
         return None
-    if df["ema200"].iloc[-1] != df["ema200"].iloc[-1]:  # NaN
+    n = len(df)
+    if idx < 0:
+        idx = n + idx
+    if idx < MIN_HISTORY - 1 or idx >= n:
+        return None
+    if pd.isna(df["ema200"].iloc[idx]):
         return None
 
-    last = df.iloc[-1]
-    lookback = min(RSI_LOOKBACK, len(df))
-    recent_rsi = df["rsi"].iloc[-lookback:]
+    last = df.iloc[idx]
+    lookback_start = max(0, idx + 1 - RSI_LOOKBACK)
+    recent_rsi = df["rsi"].iloc[lookback_start : idx + 1]
 
     price = float(last["close"])
     open_px = float(last["open"])
@@ -241,8 +246,15 @@ def evaluate_latest(df: pd.DataFrame, symbol: str = "") -> Optional[CandleSignal
         volume_ok=volume_ok,
         entry=entry,
         exit_reasons=exit_reasons,
-        bars=len(df),
+        bars=idx + 1,
     )
+
+
+def evaluate_latest(df: pd.DataFrame, symbol: str = "") -> Optional[CandleSignal]:
+    """Apply the manual candle loop to the last row of an indicator frame."""
+    if df is None or len(df) < MIN_HISTORY:
+        return None
+    return evaluate_bar(df, len(df) - 1, symbol)
 
 
 def apply_position_rules(

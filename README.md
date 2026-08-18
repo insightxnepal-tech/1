@@ -41,10 +41,26 @@ python candle_scanner.py --send-latest
 
 The report lists **every ordinary NEPSE script that matches today**, plus exits and near-misses (3 of 4 rules). GitHub Action `NEPSE candle scan → Telegram` can run the same job after market close if those secrets are set on this repo.
 
+## Monthly buy / sell accuracy
+
+Replay the same ENTRY / EXIT rules on historical daily bars and print a table per calendar month:
+
+```bash
+python candle_accuracy.py
+```
+
+Outputs:
+
+- `candle_accuracy_monthly.md` — monthly buy accuracy (1/5/10/20-session win rate) and sell accuracy (green-trade win rate)
+- `candle_accuracy_monthly.json` — machine-readable payload
+- `candle_accuracy_trades.csv` — every paper trade
+
+OHLCV is cached under `data/ohlcv/` (gitignored). Pass `--no-cache` to refetch.
+
 ## Tests
 
 ```bash
-python -m pytest test_candle_scanner.py -q
+python -m pytest test_candle_scanner.py test_candle_accuracy.py -q
 ```
 
 Not financial advice. Data is unofficial and can be delayed or incomplete.
