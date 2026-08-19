@@ -1,0 +1,161 @@
+{
+  "generated_at": "2026-08-19T01:26:44Z",
+  "regime": {
+    "date": "2026-08-19",
+    "close": 2622.48,
+    "rsi": 37.8,
+    "ema200": 2694.19,
+    "risk_on": true,
+    "reason": "RISK-ON (RSI 37.8 \u2264 80 cycle; re-entry at \u2264 40)"
+  },
+  "core": {
+    "train": {
+      "start": "2023-02-01",
+      "end": "2024-12-30",
+      "strategy_pct": 16.21,
+      "nepse_bh_pct": 23.58,
+      "excess_pct": -7.37,
+      "time_in_market_pct": 80.9,
+      "cycles_closed": 2,
+      "cycle_win_pct": 100.0,
+      "cycle_avg_pct": 6.13,
+      "trades": [
+        {
+          "entry": "2023-02-01",
+          "exit": "2023-12-21",
+          "pnl_pct": 1.33,
+          "hold": 204,
+          "open": false
+        },
+        {
+          "entry": "2024-02-21",
+          "exit": "2024-07-15",
+          "pnl_pct": 10.94,
+          "hold": 93,
+          "open": false
+        },
+        {
+          "entry": "2024-09-24",
+          "exit": "2024-12-30",
+          "pnl_pct": 3.17,
+          "hold": 58,
+          "open": true
+        }
+      ]
+    },
+    "test": {
+      "start": "2025-01-01",
+      "end": "2026-08-19",
+      "strategy_pct": 18.12,
+      "nepse_bh_pct": 1.78,
+      "excess_pct": 16.34,
+      "time_in_market_pct": 92.3,
+      "cycles_closed": 2,
+      "cycle_win_pct": 100.0,
+      "cycle_avg_pct": 11.43,
+      "trades": [
+        {
+          "entry": "2025-01-01",
+          "exit": "2025-03-03",
+          "pnl_pct": 12.08,
+          "hold": 38,
+          "open": false
+        },
+        {
+          "entry": "2025-03-20",
+          "exit": "2025-07-23",
+          "pnl_pct": 10.77,
+          "hold": 82,
+          "open": false
+        },
+        {
+          "entry": "2025-08-18",
+          "exit": "2026-08-19",
+          "pnl_pct": -5.02,
+          "hold": 225,
+          "open": true
+        }
+      ]
+    },
+    "full": {
+      "start": "2023-02-01",
+      "end": "2026-08-19",
+      "strategy_pct": 35.53,
+      "nepse_bh_pct": 24.19,
+      "excess_pct": 11.34,
+      "time_in_market_pct": 86.1,
+      "cycles_closed": 4,
+      "cycle_win_pct": 100.0,
+      "cycle_avg_pct": 9.3,
+      "trades": [
+        {
+          "entry": "2023-02-01",
+          "exit": "2023-12-21",
+          "pnl_pct": 1.33,
+          "hold": 204,
+          "open": false
+        },
+        {
+          "entry": "2024-02-21",
+          "exit": "2024-07-15",
+          "pnl_pct": 10.94,
+          "hold": 93,
+          "open": false
+        },
+        {
+          "entry": "2024-09-24",
+          "exit": "2025-03-03",
+          "pnl_pct": 14.17,
+          "hold": 97,
+          "open": false
+        },
+        {
+          "entry": "2025-03-20",
+          "exit": "2025-07-23",
+          "pnl_pct": 10.77,
+          "hold": 82,
+          "open": false
+        },
+        {
+          "entry": "2025-08-18",
+          "exit": "2026-08-19",
+          "pnl_pct": -5.02,
+          "hold": 225,
+          "open": true
+        }
+      ]
+    }
+  },
+  "satellite": {
+    "train": {
+      "split": "train",
+      "n": 68,
+      "win": 86.8,
+      "avg": 0.99,
+      "med": 2.5,
+      "exp": 0.99,
+      "hold": 7.7,
+      "stops": 4,
+      "targets": 59
+    },
+    "test": {
+      "split": "test",
+      "n": 103,
+      "win": 81.6,
+      "avg": 0.1,
+      "med": 2.5,
+      "exp": 0.1,
+      "hold": 7.3,
+      "stops": 13,
+      "targets": 84
+    },
+    "n_all": 171,
+    "cost_pct": 0.5,
+    "rules": {
+      "tp": 0.03,
+      "sl": 0.12,
+      "max_hold": 30,
+      "rsi_max": 42.0
+    }
+  }
+}

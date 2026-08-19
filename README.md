@@ -57,10 +57,24 @@ Outputs:
 
 OHLCV is cached under `data/ohlcv/` (gitignored). Pass `--no-cache` to refetch.
 
+## Barbell strategy (index cycle + optional bounce)
+
+The 4-rule candle book did not hit 75% accuracy or beat NEPSE. `nepse_strategy.py` is a two-sleeve playbook from a 2023–2024 train / 2025–2026 test split:
+
+```bash
+python nepse_strategy.py --backtest
+python nepse_strategy.py --scan
+```
+
+- **Core:** hold NEPSE in an RSI(14) 80/40 cycle (cash after RSI ≥ 80, re-enter at ≤ 40). Full-sample NAV beat buy-and-hold; the bull-market train window lagged.
+- **Satellite (optional, 20% cap):** 3% target / 12% stop bounce with >75% out-of-sample hit rate after 0.5% costs. It did **not** beat NEPSE as a standalone book.
+
+Write-up: `nepse_strategy_report.md`. Not financial advice.
+
 ## Tests
 
 ```bash
-python -m pytest test_candle_scanner.py test_candle_accuracy.py -q
+python -m pytest test_candle_scanner.py test_candle_accuracy.py test_nepse_strategy.py -q
 ```
 
 Not financial advice. Data is unofficial and can be delayed or incomplete.
