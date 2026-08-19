@@ -1,0 +1,7 @@
+pandas>=2.2
+numpy>=1.26
+requests>=2.32
+python-dotenv>=1.0
+nepseman-api>=1.0.1
+pytest>=8.0
+tzdata>=2024.1
