@@ -6,7 +6,6 @@ import json
 import logging
 import math
 import os
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from typing import Iterable, Optional
@@ -22,6 +21,7 @@ from config import (
     load_settings,
 )
 from data_client import DataClient, ListedScript, is_ordinary_equity
+from floorsheet import FloorsheetSession, SymbolFloorsheet
 from indicators import volume_filter_ok
 from supertrend import enrich_ohlcv
 
@@ -69,6 +69,9 @@ class ScanRow:
     turnover_sma20: float | None = None
     trailing_stop: float | None = None
     dist_to_trail_pct: float | None = None
+    fs_quantity: float | None = None
+    fs_turnover: float | None = None
+    fs_trades: int | None = None
     bars: int = 0
     note: str = ""
 
@@ -91,6 +94,10 @@ class ScanReport:
     holds: list[ScanRow] = field(default_factory=list)
     blocked_buys: list[ScanRow] = field(default_factory=list)
     skipped_symbols: list[str] = field(default_factory=list)
+    data_source: str = "nepse"
+    floorsheet_date: str = ""
+    floorsheet_rows: int = 0
+    floorsheet_turnover: float = 0.0
     message: str = ""
 
     def to_dict(self) -> dict:
@@ -124,6 +131,31 @@ def _bar_date(value) -> str:
     if hasattr(value, "strftime"):
         return value.strftime("%Y-%m-%d")
     return str(value)[:10]
+
+
+def apply_floorsheet_volume(
+    frame: pd.DataFrame,
+    fs_row: SymbolFloorsheet | None,
+    business_date: str,
+) -> pd.DataFrame:
+    """Replace the latest bar volume with NEPSE floorsheet aggregate when dates match."""
+    if frame is None or frame.empty or fs_row is None or not business_date:
+        return frame
+    out = frame.copy()
+    last_idx = out.index[-1]
+    last_date = _bar_date(out.loc[last_idx, "businessDate"])
+    if last_date != business_date[:10]:
+        return out
+    out.loc[last_idx, "volume"] = float(fs_row.quantity)
+    return out
+
+
+def attach_floorsheet(row: ScanRow, fs_row: SymbolFloorsheet | None) -> None:
+    if fs_row is None:
+        return
+    row.fs_quantity = round(fs_row.quantity, 0)
+    row.fs_turnover = round(fs_row.turnover, 2)
+    row.fs_trades = int(fs_row.trades)
 
 
 def evaluate_symbol(
@@ -205,8 +237,15 @@ def evaluate_symbol(
 def meets_liquidity(
     frame: pd.DataFrame,
     settings: Settings,
+    fs_row: SymbolFloorsheet | None = None,
 ) -> bool:
-    """20-day average volume and turnover vs configured floors (no Supertrend)."""
+    """20-day OHLCV averages or same-session NEPSE floorsheet turnover/volume."""
+    if fs_row is not None:
+        if (
+            fs_row.quantity >= settings.min_avg_volume
+            and fs_row.turnover >= settings.min_avg_turnover_npr
+        ):
+            return True
     if frame is None or len(frame) < MIN_HISTORY_BARS:
         return False
     volume = frame["volume"].astype(float)
@@ -228,6 +267,7 @@ def build_universe(
     *,
     expand: bool = True,
     only: Optional[Iterable[str]] = None,
+    floorsheet: FloorsheetSession | None = None,
 ) -> list[ListedScript]:
     by_symbol = {s.symbol.upper(): s for s in listed}
     if only:
@@ -249,10 +289,13 @@ def build_universe(
 
     for script in listed:
         symbol = script.symbol.upper()
-        if symbol in seen or not is_ordinary_equity(symbol, script.name, script.sector):
+        if symbol in seen or not is_ordinary_equity(
+            symbol, script.name, script.sector, script.instrument_type
+        ):
             continue
         frame = ohlcv_map.get(symbol)
-        if frame is None or not meets_liquidity(frame, settings):
+        fs_row = floorsheet.get(symbol) if floorsheet else None
+        if frame is None or not meets_liquidity(frame, settings, fs_row):
             continue
         universe.append(script)
         seen.add(symbol)
@@ -264,25 +307,11 @@ def collect_ohlcv(
     client: DataClient,
     workers: int,
 ) -> dict[str, pd.DataFrame]:
-    out: dict[str, pd.DataFrame] = {}
-    if not symbols:
-        return out
-    workers = max(1, workers)
-
-    def _one(symbol: str) -> tuple[str, pd.DataFrame]:
-        try:
-            return symbol, client.ohlcv(symbol)
-        except Exception as exc:  # noqa: BLE001
-            logger.warning("Fetch failed for %s: %s", symbol, exc)
-            return symbol, pd.DataFrame()
-
-    with ThreadPoolExecutor(max_workers=workers) as pool:
-        futures = {pool.submit(_one, symbol): symbol for symbol in symbols}
-        for future in as_completed(futures):
-            symbol, frame = future.result()
-            out[symbol] = frame
-            status = f"{len(frame)} bars" if frame is not None and not frame.empty else "empty"
-            logger.info("Fetched %s (%s)", symbol, status)
+    _ = workers  # client batching uses settings.workers
+    out = client.ohlcv_many(symbols)
+    for symbol, frame in out.items():
+        status = f"{len(frame)} bars" if frame is not None and not frame.empty else "empty"
+        logger.info("Fetched %s (%s)", symbol, status)
     return out
 
 
@@ -333,6 +362,20 @@ def run_scan(
     settings = settings or load_settings()
     client = client or DataClient(settings=settings, use_cache=use_cache)
 
+    floorsheet = FloorsheetSession()
+    if client.source == "nepse":
+        try:
+            floorsheet = client.floorsheet_session(force_refresh=not use_cache)
+            logger.info(
+                "NEPSE floorsheet %s — %d trades, NPR %.0f turnover, %d symbols",
+                floorsheet.business_date,
+                floorsheet.total_rows,
+                floorsheet.total_turnover,
+                floorsheet.symbol_count,
+            )
+        except Exception as exc:  # noqa: BLE001
+            logger.warning("NEPSE floorsheet unavailable (%s)", exc)
+
     if listed is None:
         try:
             listed = client.listed_scripts()
@@ -349,7 +392,16 @@ def run_scan(
         ]
         fetch_symbols = targets
     else:
-        fetch_symbols = sorted({s.symbol.upper() for s in listed if is_ordinary_equity(s.symbol, s.name, s.sector)} | elite)
+        fetch_symbols = sorted(
+            {
+                s.symbol.upper()
+                for s in listed
+                if is_ordinary_equity(
+                    s.symbol, s.name, s.sector, s.instrument_type
+                )
+            }
+            | elite
+        )
         if not expand:
             fetch_symbols = sorted(elite)
         universe_scripts = None  # resolved after OHLCV
@@ -359,13 +411,22 @@ def run_scan(
 
     if universe_scripts is None:
         universe_scripts = build_universe(
-            listed, ohlcv_map, settings, expand=expand, only=only
+            listed,
+            ohlcv_map,
+            settings,
+            expand=expand,
+            only=only,
+            floorsheet=floorsheet if floorsheet.symbol_count else None,
         )
 
     rows: list[ScanRow] = []
     skipped: list[str] = []
     for script in universe_scripts:
         frame = ohlcv_map.get(script.symbol, pd.DataFrame())
+        fs_row = floorsheet.get(script.symbol) if floorsheet.symbol_count else None
+        frame = apply_floorsheet_volume(
+            frame, fs_row, floorsheet.business_date if fs_row else ""
+        )
         row = evaluate_symbol(
             script.symbol,
             frame,
@@ -374,6 +435,7 @@ def run_scan(
             elite=script.symbol in elite,
             settings=settings,
         )
+        attach_floorsheet(row, fs_row)
         if row.signal == "NONE" and row.note:
             skipped.append(script.symbol)
         rows.append(row)
@@ -404,6 +466,10 @@ def run_scan(
         holds=holds,
         blocked_buys=blocked,
         skipped_symbols=skipped,
+        data_source=client.source,
+        floorsheet_date=floorsheet.business_date,
+        floorsheet_rows=floorsheet.total_rows,
+        floorsheet_turnover=round(floorsheet.total_turnover, 2),
     )
     return report
 
@@ -417,6 +483,12 @@ def persist_report(
     from notifier import format_markdown_report, format_telegram
 
     payload = report.to_dict()
+    if report.floorsheet_date:
+        payload["floorsheet"] = {
+            "business_date": report.floorsheet_date,
+            "total_rows": report.floorsheet_rows,
+            "total_turnover": report.floorsheet_turnover,
+        }
     payload["message"] = format_telegram(report, positions or {})
     save_json(settings.latest_file, payload)
     with open(settings.report_file, "w", encoding="utf-8") as handle:

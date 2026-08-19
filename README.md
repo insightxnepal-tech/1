@@ -2,7 +2,7 @@
 
 Daily scanner and Telegram notifier for the **Supertrend Elite Momentum Basket** on the Nepal Stock Exchange.
 
-Not financial advice. OHLCV is unofficial merolagani chart data and can be delayed or incomplete.
+Not financial advice. OHLCV and floorsheet come from the unofficial NEPSE API wrapper and can be delayed or incomplete.
 
 ## Strategy
 
@@ -33,17 +33,14 @@ cp .env.example .env   # then set TELEGRAM_TOKEN
 ## Run
 
 ```bash
-# Elite basket + liquid dynamic tickers, write reports, send Telegram if token is set
+# Elite basket + liquid dynamic tickers (NEPSE API + floorsheet), Telegram if token set
 python main.py
 
 # Elite basket only (faster)
-python main.py --elite-only --no-telegram
+python main.py --elite-only
 
-# Specific symbols
-python main.py --symbols HDL,NLG,CIT --no-telegram
-
-# Resend the last saved report
-python main.py --send-latest
+# Merolagani fallback
+python main.py --data-source merolagani --no-telegram
 ```
 
 Outputs:
@@ -51,7 +48,8 @@ Outputs:
 - `supertrend_scan_latest.json` — full payload
 - `supertrend_scan_report.md` — human-readable summary
 - `supertrend_positions.json` — paper BUY/SELL book with trailing stops
-- `data/ohlcv/` — CSV cache (gitignored)
+- `data/ohlcv/` — CSV OHLCV cache (gitignored)
+- `data/floorsheet_latest.json` — latest NEPSE floorsheet aggregate (gitignored)
 
 ## Telegram
 
@@ -68,7 +66,9 @@ python -m pytest test_supertrend_scanner.py -q
 ```text
 .cursorrules
 config.py          # Supertrend 10/3.0, elite basket, liquidity floors
-data_client.py     # merolagani listed scrips + daily OHLCV
+nepse_api_client.py # NEPSE API sync wrapper (history + floorsheet)
+floorsheet.py      # Floorsheet aggregation by symbol
+data_client.py     # NEPSE / merolagani listed scrips + OHLCV + floorsheet cache
 indicators.py      # Wilder ATR, volume SMA, RVOL
 supertrend.py      # Supertrend bands, flips, trailing stop
 scanner.py         # universe, BUY/SELL/HOLD evaluation

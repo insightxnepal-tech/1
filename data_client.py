@@ -48,9 +48,12 @@ class ListedScript:
     symbol: str
     name: str
     sector: str = ""
+    instrument_type: str = ""
 
 
-def is_ordinary_equity(symbol: str, name: str = "", sector: str = "") -> bool:
+def is_ordinary_equity(symbol: str, name: str = "", sector: str = "", instrument_type: str = "") -> bool:
+    if instrument_type and instrument_type != "Equity":
+        return False
     text = f"{symbol} {name} {sector}"
     if any(fragment.lower() in text.lower() for fragment in SKIP_NAME_FRAGMENTS):
         return False
@@ -222,14 +225,32 @@ def fetch_symbol_ohlcv(
 
 
 class DataClient:
-    """Fetch listed scripts and daily OHLCV, optionally from a CSV cache."""
+    """Fetch listed scripts, daily OHLCV, and NEPSE floorsheet."""
 
     def __init__(self, settings: Optional[Settings] = None, use_cache: bool = True):
         self.settings = settings or load_settings()
         self.use_cache = use_cache
+        self._nepse = None
+
+    @property
+    def source(self) -> str:
+        return (self.settings.data_source or "nepse").lower()
+
+    def _nepse_client(self):
+        if self._nepse is None:
+            from nepse_api_client import NepseApiClient
+
+            self._nepse = NepseApiClient(
+                history_size=500,
+                floorsheet_page_size=500,
+                max_concurrency=self.settings.workers,
+            )
+        return self._nepse
 
     def listed_scripts(self) -> list[ListedScript]:
-        return fetch_listed_scripts()
+        if self.source == "merolagani":
+            return fetch_listed_scripts()
+        return self._nepse_client().listed_scripts()
 
     def ohlcv(self, symbol: str, force_refresh: bool = False) -> pd.DataFrame:
         symbol = symbol.upper()
@@ -238,15 +259,85 @@ class DataClient:
             if not cached.empty:
                 last = pd.Timestamp(cached["businessDate"].iloc[-1]).date()
                 today = datetime.now(ZoneInfo("Asia/Kathmandu")).date()
-                # Same-session reruns reuse today's bar. Stale files refetch.
                 if last >= today:
                     return cached
-        frame = fetch_symbol_ohlcv(
-            symbol, calendar_days=self.settings.history_calendar_days
-        )
+        if self.source == "merolagani":
+            frame = fetch_symbol_ohlcv(
+                symbol, calendar_days=self.settings.history_calendar_days
+            )
+        else:
+            frame = self._nepse_client().ohlcv(symbol)
         if self.use_cache and not frame.empty:
             save_cached_ohlcv(self.settings.cache_dir, symbol, frame)
         return frame
+
+    def ohlcv_many(self, symbols: list[str], force_refresh: bool = False) -> dict[str, pd.DataFrame]:
+        symbols = [s.upper() for s in symbols]
+        if self.source == "merolagani":
+            from concurrent.futures import ThreadPoolExecutor, as_completed
+
+            out: dict[str, pd.DataFrame] = {}
+            workers = max(1, self.settings.workers)
+
+            def _one(symbol: str) -> tuple[str, pd.DataFrame]:
+                return symbol, self.ohlcv(symbol, force_refresh=force_refresh)
+
+            with ThreadPoolExecutor(max_workers=workers) as pool:
+                futures = {pool.submit(_one, symbol): symbol for symbol in symbols}
+                for future in as_completed(futures):
+                    symbol, frame = future.result()
+                    out[symbol] = frame
+            return out
+        if self.use_cache and not force_refresh:
+            out: dict[str, pd.DataFrame] = {}
+            missing: list[str] = []
+            today = datetime.now(ZoneInfo("Asia/Kathmandu")).date()
+            for symbol in symbols:
+                cached = load_cached_ohlcv(self.settings.cache_dir, symbol)
+                if not cached.empty and pd.Timestamp(cached["businessDate"].iloc[-1]).date() >= today:
+                    out[symbol] = cached
+                else:
+                    missing.append(symbol)
+            if missing:
+                fetched = self._nepse_client().ohlcv_many(missing)
+                for symbol, frame in fetched.items():
+                    if self.use_cache and not frame.empty:
+                        save_cached_ohlcv(self.settings.cache_dir, symbol, frame)
+                    out[symbol] = frame
+            return out
+        fetched = self._nepse_client().ohlcv_many(symbols)
+        if self.use_cache:
+            for symbol, frame in fetched.items():
+                if not frame.empty:
+                    save_cached_ohlcv(self.settings.cache_dir, symbol, frame)
+        return fetched
+
+    def floorsheet_session(self, force_refresh: bool = False):
+        from floorsheet import FloorsheetSession
+
+        path = self.settings.floorsheet_cache_file
+        if self.use_cache and not force_refresh and os.path.exists(path):
+            try:
+                import json
+
+                with open(path, encoding="utf-8") as handle:
+                    payload = json.load(handle)
+                session = FloorsheetSession.from_dict(payload)
+                if session.business_date:
+                    return session
+            except Exception as exc:  # noqa: BLE001
+                logger.warning("Floorsheet cache read failed: %s", exc)
+        if self.source == "merolagani":
+            return FloorsheetSession()
+        session = self._nepse_client().floorsheet_session()
+        if self.use_cache and session.business_date:
+            os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+            import json
+
+            with open(path, "w", encoding="utf-8") as handle:
+                json.dump(session.to_dict(), handle, indent=2)
+                handle.write("\n")
+        return session
 
     @staticmethod
     def scripts_as_dicts(scripts: list[ListedScript]) -> list[dict]:

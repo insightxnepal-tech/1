@@ -26,6 +26,8 @@ MIN_AVG_TURNOVER_NPR: Final[float] = 500_000.0
 
 MIN_HISTORY_BARS: Final[int] = VOLUME_SMA_LONG + SUPERTREND_PERIOD
 HISTORY_CALENDAR_DAYS: Final[int] = 800
+NEPSE_HISTORY_SIZE: Final[int] = 500
+FLOORSHEET_PAGE_SIZE: Final[int] = 500
 MAX_WORKERS: Final[int] = 8
 REQUEST_TIMEOUT: Final[int] = 25
 RETRY_COUNT: Final[int] = 3
@@ -119,6 +121,14 @@ class Settings:
     )
     cache_dir: str = field(
         default_factory=lambda: os.getenv("SUPERTREND_CACHE_DIR", "data/ohlcv")
+    )
+    floorsheet_cache_file: str = field(
+        default_factory=lambda: os.getenv(
+            "SUPERTREND_FLOORSHEET_CACHE", "data/floorsheet_latest.json"
+        )
+    )
+    data_source: str = field(
+        default_factory=lambda: os.getenv("SUPERTREND_DATA_SOURCE", "nepse").strip().lower()
     )
     workers: int = field(
         default_factory=lambda: int(os.getenv("SUPERTREND_WORKERS", str(MAX_WORKERS)))

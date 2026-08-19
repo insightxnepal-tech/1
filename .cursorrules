@@ -17,9 +17,10 @@ Keep the architecture modular: `config.py`, `data_client.py`, `indicators.py`,
 
 ## Data and ops
 
-- Use merolagani chart OHLCV. Do not call nepalstock.com.np from CI/cloud.
+- Use the NEPSE API (`nepseman-api`) for company list, price history, and floorsheet aggregation.
+- Merolagani is an optional fallback via `SUPERTREND_DATA_SOURCE=merolagani`.
 - Skip mutual funds, debentures, bonds, promoter, and preference shares.
-- Never commit `.env`, Telegram tokens, or cached OHLCV.
+- Never commit `.env`, Telegram tokens, or cached OHLCV / floorsheet JSON.
 - Tests must not hit the network. Live fetches belong behind CLI flags.
 
 ## Code style

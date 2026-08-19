@@ -40,11 +40,20 @@ def _pnl_line(row: ScanRow, positions: dict) -> str:
 
 def format_telegram(report: ScanReport, positions: Optional[dict] = None) -> str:
     positions = positions or {}
+    fs_line = ""
+    if report.floorsheet_date:
+        fs_line = (
+            f"NEPSE floorsheet `{report.floorsheet_date}` · "
+            f"{report.floorsheet_rows:,} trades · "
+            f"NPR {report.floorsheet_turnover:,.0f} turnover"
+        )
     lines = [
         f"📈 *{STRATEGY_NAME}*",
-        f"Session `{report.as_of}` · Supertrend(10, 3.0) · ATR-10",
-        "",
+        f"Session `{report.as_of}` · Supertrend(10, 3.0) · source `{report.data_source}`",
     ]
+    if fs_line:
+        lines.append(fs_line)
+    lines.append("")
 
     if report.buys:
         lines.append(f"🟢 *BUY — Supertrend green flip* ({len(report.buys)})")
@@ -52,9 +61,12 @@ def format_telegram(report: ScanReport, positions: Optional[dict] = None) -> str
         lines.append("")
         for row in report.buys:
             lines.append(f"• *{row.symbol}* @ Rs {_price(row.close)}")
+            fs_bits = ""
+            if row.fs_turnover is not None:
+                fs_bits = f" · FS NPR {row.fs_turnover:,.0f} ({row.fs_trades or 0} trades)"
             lines.append(
                 f"  Trail SL {_price(row.trailing_stop)} · "
-                f"cushion {_pct(row.dist_to_trail_pct)} · RVOL {_rvol(row)}"
+                f"cushion {_pct(row.dist_to_trail_pct)} · RVOL {_rvol(row)}{fs_bits}"
             )
             if row.elite:
                 lines.append("  Elite basket")
@@ -82,9 +94,12 @@ def format_telegram(report: ScanReport, positions: Optional[dict] = None) -> str
         lines.append("")
         for row in report.holds:
             badge = " · Elite" if row.elite else ""
+            fs_bits = ""
+            if row.fs_turnover is not None:
+                fs_bits = f" · FS NPR {row.fs_turnover:,.0f}"
             lines.append(
                 f"• *{row.symbol}* @ Rs {_price(row.close)} · "
-                f"SL {_price(row.trailing_stop)} · {_pct(row.dist_to_trail_pct)}{badge}"
+                f"SL {_price(row.trailing_stop)} · {_pct(row.dist_to_trail_pct)}{badge}{fs_bits}"
             )
         lines.append("")
     else:
@@ -106,7 +121,7 @@ def format_telegram(report: ScanReport, positions: Optional[dict] = None) -> str
         f"({report.elite_count} elite + {report.dynamic_count} dynamic) · "
         f"scanned {report.scanned} · skipped {report.skipped}._"
     )
-    lines.append("_Not financial advice. Unofficial merolagani OHLCV._")
+    lines.append("_Not financial advice. Unofficial NEPSE API data._")
     return "\n".join(lines).strip() + "\n"
 
 
@@ -117,7 +132,14 @@ def format_markdown_report(
     lines = [
         f"# {STRATEGY_NAME} — {report.as_of}",
         "",
-        "Supertrend period **10**, multiplier **3.0**, Wilder ATR-10.",
+        f"Data source: **{report.data_source}** · Supertrend period **10**, multiplier **3.0**, Wilder ATR-10.",
+    ]
+    if report.floorsheet_date:
+        lines.append(
+            f"NEPSE floorsheet **{report.floorsheet_date}**: "
+            f"{report.floorsheet_rows:,} trades, NPR {report.floorsheet_turnover:,.0f} turnover."
+        )
+    lines += [
         "BUY = green flip + (20-day volume SMA > 50-day SMA **or** RVOL > 1.2).",
         "SELL = Supertrend red flip. Trailing stop = current green Supertrend line.",
         "",
@@ -186,7 +208,7 @@ def format_markdown_report(
     if report.skipped_symbols:
         lines += ["", "## Skipped", "", ", ".join(report.skipped_symbols)]
 
-    lines += ["", "_Not financial advice. Unofficial merolagani OHLCV._", ""]
+    lines += ["", "_Not financial advice. Unofficial NEPSE API data._", ""]
     return "\n".join(lines)
 
 

@@ -57,10 +57,16 @@ def build_parser() -> argparse.ArgumentParser:
         help="Ignore on-disk OHLCV cache and refetch",
     )
     parser.add_argument(
+        "--data-source",
+        choices=("nepse", "merolagani"),
+        default=None,
+        help="OHLCV source: nepse API (default) or merolagani charts",
+    )
+    parser.add_argument(
         "--workers",
         type=int,
         default=None,
-        help="Parallel merolagani fetches",
+        help="Parallel NEPSE / merolagani fetches",
     )
     return parser
 
@@ -70,6 +76,8 @@ def main(argv: Optional[list[str]] = None) -> int:
     settings = load_settings()
     if args.workers is not None:
         settings = replace(settings, workers=max(1, args.workers))
+    if args.data_source:
+        settings = replace(settings, data_source=args.data_source)
 
     if args.send_latest:
         return 0 if send_latest_report(settings) else 1
@@ -103,8 +111,8 @@ def main(argv: Optional[list[str]] = None) -> int:
 
     if args.no_telegram:
         return 0
-    send_report(report, settings, positions)
-    return 0
+    ok = send_report(report, settings, positions)
+    return 0 if ok else 1
 
 
 if __name__ == "__main__":

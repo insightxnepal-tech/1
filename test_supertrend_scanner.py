@@ -323,12 +323,16 @@ class TestNotifier(unittest.TestCase):
             dynamic_count=0,
             scanned=15,
             skipped=0,
+            data_source="nepse",
+            floorsheet_date="2026-08-18",
+            floorsheet_rows=1000,
+            floorsheet_turnover=1_000_000.0,
             buys=[buy],
         )
         text = notifier.format_telegram(report)
         self.assertIn("HDL", text)
         self.assertIn("BUY", text)
-        self.assertIn("Supertrend", text)
+        self.assertIn("floorsheet", text)
         md = notifier.format_markdown_report(report)
         self.assertIn("HDL", md)
         self.assertIn("ACTIVE TREND", md)
@@ -376,6 +380,78 @@ class TestNotifier(unittest.TestCase):
             scanner.persist_report(report, settings, positions={})
             self.assertTrue(os.path.exists(settings.latest_file))
             self.assertTrue(os.path.exists(settings.report_file))
+
+
+class TestFloorsheet(unittest.TestCase):
+    def test_aggregate_floorsheet_rows(self):
+        from floorsheet import aggregate_floorsheet_rows
+
+        rows = [
+            {
+                "stockSymbol": "HDL",
+                "contractQuantity": 100,
+                "contractAmount": 118000.0,
+                "businessDate": "2026-08-18",
+            },
+            {
+                "stockSymbol": "HDL",
+                "contractQuantity": 50,
+                "contractAmount": 59000.0,
+                "businessDate": "2026-08-18",
+            },
+            {
+                "stockSymbol": "SHEL",
+                "contractQuantity": 200,
+                "contractAmount": 59600.0,
+                "businessDate": "2026-08-18",
+            },
+        ]
+        session = aggregate_floorsheet_rows(rows)
+        self.assertEqual(session.business_date, "2026-08-18")
+        self.assertEqual(session.total_rows, 3)
+        self.assertEqual(session.symbol_count, 2)
+        hdl = session.get("HDL")
+        self.assertIsNotNone(hdl)
+        assert hdl is not None
+        self.assertEqual(hdl.quantity, 150)
+        self.assertEqual(hdl.trades, 2)
+
+    def test_apply_floorsheet_volume_patches_latest_bar(self):
+        frame = ohlcv_from_close(np.linspace(100, 120, 70), volume=1000)
+        from floorsheet import SymbolFloorsheet
+
+        fs = SymbolFloorsheet(
+            symbol="HDL", quantity=25000, turnover=2_950_000, trades=40, vwap=118.0
+        )
+        last_date = frame["businessDate"].iloc[-1].strftime("%Y-%m-%d")
+        patched = scanner.apply_floorsheet_volume(frame, fs, last_date)
+        self.assertEqual(float(patched["volume"].iloc[-1]), 25000.0)
+
+
+class TestNepseApi(unittest.TestCase):
+    def test_nepse_history_to_ohlcv(self):
+        from nepse_api_client import nepse_history_to_ohlcv
+
+        rows = [
+            {
+                "businessDate": "2026-08-17",
+                "highPrice": 1185.0,
+                "lowPrice": 1175.0,
+                "closePrice": 1179.0,
+                "totalTradedQuantity": 23412,
+            },
+            {
+                "businessDate": "2026-08-18",
+                "highPrice": 1184.6,
+                "lowPrice": 1179.0,
+                "closePrice": 1180.9,
+                "totalTradedQuantity": 22481,
+            },
+        ]
+        frame = nepse_history_to_ohlcv(rows)
+        self.assertEqual(len(frame), 2)
+        self.assertAlmostEqual(float(frame["close"].iloc[-1]), 1180.9)
+        self.assertIn("open", frame.columns)
 
 
 class TestConfig(unittest.TestCase):
