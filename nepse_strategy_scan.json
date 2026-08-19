@@ -1,0 +1,12 @@
+{
+  "regime": {
+    "date": "2026-08-19",
+    "close": 2622.48,
+    "rsi": 37.8,
+    "ema200": 2694.19,
+    "risk_on": true,
+    "reason": "RISK-ON (RSI 37.8 \u2264 80 cycle; re-entry at \u2264 40)"
+  },
+  "satellite": [],
+  "message": "# NEPSE strategy scan \u2014 2026-08-19\n\n**RISK-ON (RSI 37.8 \u2264 80 cycle; re-entry at \u2264 40)**\n\nNEPSE 2622.48 \u00b7 RSI 37.8 \u00b7 200 EMA 2694.19\n\nCore: **hold NEPSE** (~80% of book).\n\n## Satellite bounce candidates\n\nNone today.\n\n_Not financial advice._\n"
+}

@@ -1,0 +1,10 @@
+data/ohlcv/
+research/*.json
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.firecrawl/
+.env
+*.egg-info/
+.DS_Store

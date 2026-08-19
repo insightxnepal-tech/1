@@ -1,0 +1,38 @@
+name: NEPSE candle scan → Telegram
+
+on:
+  workflow_dispatch:
+    inputs:
+      send_latest:
+        description: "Resend the last saved report without rescanning"
+        required: true
+        type: boolean
+        default: false
+  schedule:
+    # ~4:45 PM Nepal Time after NEPSE close (Sun–Thu)
+    - cron: "15 11 * * 0-4"
+
+jobs:
+  scan-and-send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Scan all ordinary NEPSE scripts and Telegram the report
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ "${{ github.event.inputs.send_latest }}" = "true" ]; then
+            python candle_scanner.py --send-latest
+          else
+            python candle_scanner.py --all
+          fi
