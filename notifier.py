@@ -9,7 +9,7 @@ from typing import Optional
 import requests
 
 from config import STRATEGY_NAME, TELEGRAM_CHUNK_SIZE, Settings, load_settings
-from scanner import ScanReport, ScanRow
+from scanner import ScanReport, ScanRow, nepal_today
 
 logger = logging.getLogger(__name__)
 
@@ -36,6 +36,45 @@ def _pnl_line(row: ScanRow, positions: dict) -> str:
     pnl = (row.close - float(entry)) / float(entry) * 100.0
     entered = pos.get("entry_date", "?")
     return f" | P/L {pnl:+.1f}% since {entered}"
+
+
+def format_live_alerts(
+    rows: list[ScanRow],
+    status: Optional[dict] = None,
+    market_open: bool = False,
+) -> str:
+    """Immediate BUY/SELL Telegram body for the live poller."""
+    status = status or {}
+    as_of = status.get("asOf") or nepal_today()
+    mode = "LIVE OPEN" if market_open else "LIVE (market closed / forming last tape)"
+    lines = [
+        f"⚡ *{STRATEGY_NAME}*",
+        f"{mode} · `{as_of}` · Supertrend(10, 3.0)",
+        "",
+    ]
+    buys = [r for r in rows if r.signal == "BUY"]
+    sells = [r for r in rows if r.signal == "SELL"]
+    if buys:
+        lines.append(f"🟢 *BUY ({len(buys)})* — Supertrend green flip + volume filter")
+        lines.append("")
+        for row in buys:
+            lines.append(f"• *{row.symbol}* @ Rs {_price(row.close)}")
+            lines.append(
+                f"  Trail SL {_price(row.trailing_stop)} · "
+                f"cushion {_pct(row.dist_to_trail_pct)} · RVOL {_rvol(row)}"
+            )
+            lines.append("")
+    if sells:
+        lines.append(f"🔴 *SELL / FULL EXIT ({len(sells)})* — Supertrend red flip")
+        lines.append("")
+        for row in sells:
+            extra = _pnl_line(row, {})
+            lines.append(f"• *{row.symbol}* @ Rs {_price(row.close)}{extra}")
+            lines.append(f"  Supertrend {_price(row.supertrend)}")
+            lines.append("")
+    lines.append("_Intraday forming candle. Can reverse before official close._")
+    lines.append("_Not financial advice._")
+    return "\n".join(lines).strip() + "\n"
 
 
 def format_telegram(report: ScanReport, positions: Optional[dict] = None) -> str:

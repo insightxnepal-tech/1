@@ -1,0 +1,38 @@
+name: NEPSE Supertrend LIVE BUY/SELL → Telegram
+
+on:
+  workflow_dispatch:
+    inputs:
+      once:
+        description: "Single snapshot instead of polling until close"
+        required: true
+        type: boolean
+        default: false
+  schedule:
+    # ~10:55 AM Nepal Time (Sun–Thu) so the job is up before the 11:00 open
+    - cron: "10 5 * * 0-4"
+
+jobs:
+  live-watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 280
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Live Supertrend watch (Telegram on BUY/SELL)
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ "${{ github.event.inputs.once }}" = "true" ]; then
+            python main.py --live --once
+          else
+            python main.py --live --poll 20
+          fi

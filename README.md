@@ -39,6 +39,10 @@ python main.py
 # Elite basket only (faster)
 python main.py --elite-only
 
+# Live tape: Telegram immediately on new BUY or SELL (forming candle)
+python main.py --live
+python main.py --live --once
+
 # Merolagani fallback
 python main.py --data-source merolagani --no-telegram
 ```
@@ -53,7 +57,12 @@ Outputs:
 
 ## Telegram
 
-Set `TELEGRAM_TOKEN` (BotFather) and optionally `TELEGRAM_CHAT_ID` (defaults to `8563709547`). GitHub Action `NEPSE Supertrend Elite scan → Telegram` runs after NEPSE close (Sun–Thu ~4:45 PM NST) when those secrets are present on the repo.
+Set `TELEGRAM_TOKEN` (BotFather) and optionally `TELEGRAM_CHAT_ID` (defaults to `8563709547`).
+
+- EOD Action `NEPSE Supertrend Elite scan → Telegram` after close (Sun–Thu ~4:45 PM NST)
+- Live Action `NEPSE Supertrend LIVE BUY/SELL → Telegram` starts ~10:55 AM NST and polls until close
+
+`--live` overlays NEPSE `live_market` (during the session) or `today_price` onto Supertrend(10, 3.0) and sends Telegram **only** when a new BUY or SELL appears. HOLD is not messaged in live mode. Intraday flips can reverse before the official close.
 
 ## Tests
 

@@ -454,6 +454,101 @@ class TestNepseApi(unittest.TestCase):
         self.assertIn("open", frame.columns)
 
 
+class TestLiveScanner(unittest.TestCase):
+    def test_parse_and_prefer_live_over_today(self):
+        import live_scanner as ls
+
+        today = [{"symbol": "HDL", "closePrice": 1180.9, "openPrice": 1182, "highPrice": 1184.6, "lowPrice": 1179, "totalTradedQuantity": 100, "businessDate": "2026-08-19"}]
+        live = [{"symbol": "HDL", "lastTradedPrice": 1190.0, "openPrice": 1182, "highPrice": 1191, "lowPrice": 1179, "totalTradeQuantity": 500, "businessDate": "2026-08-19"}]
+        quotes = ls.merge_quotes(live, today)
+        self.assertEqual(quotes["HDL"].close, 1190.0)
+        self.assertEqual(quotes["HDL"].source, "live_market")
+        self.assertEqual(quotes["HDL"].volume, 500)
+
+    def test_overlay_replaces_same_day_and_appends_new_day(self):
+        import live_scanner as ls
+
+        frame = ohlcv_from_close(np.linspace(100, 110, 70), volume=1000)
+        last = frame["businessDate"].iloc[-1].strftime("%Y-%m-%d")
+        quote = ls.LiveQuote("HDL", last, 110, 112, 109, 111.5, 8000, source="live_market")
+        same = ls.overlay_live_bar(frame, quote)
+        self.assertEqual(len(same), len(frame))
+        self.assertAlmostEqual(float(same["close"].iloc[-1]), 111.5)
+        nxt = (pd.Timestamp(last) + pd.Timedelta(days=1)).strftime("%Y-%m-%d")
+        q2 = ls.LiveQuote("HDL", nxt, 111.5, 115, 111, 114, 9000, source="live_market")
+        appended = ls.overlay_live_bar(frame, q2)
+        self.assertEqual(len(appended), len(frame) + 1)
+        self.assertAlmostEqual(float(appended["close"].iloc[-1]), 114)
+
+    def test_dedup_only_new_buy_sell(self):
+        import live_scanner as ls
+
+        buy = scanner.ScanRow(symbol="CIT", signal="BUY", date="2026-08-19", close=1000.0)
+        hold = scanner.ScanRow(symbol="HDL", signal="HOLD", date="2026-08-19", close=1180.0)
+        state: dict = {"sent": {}}
+        first = ls.new_buy_sell_alerts([buy, hold], state)
+        self.assertEqual([r.symbol for r in first], ["CIT"])
+        second = ls.new_buy_sell_alerts([buy], state)
+        self.assertEqual(second, [])
+        sell = scanner.ScanRow(symbol="CIT", signal="SELL", date="2026-08-19", close=990.0)
+        third = ls.new_buy_sell_alerts([sell], state)
+        self.assertEqual([r.signal for r in third], ["SELL"])
+
+    def test_run_live_once_sends_only_buy_sell(self):
+        import live_scanner as ls
+
+        sent: list[str] = []
+
+        def fake_send(text, settings=None, token="", chat_id=""):
+            sent.append(text)
+            return True
+
+        import notifier
+
+        original = notifier.send_telegram
+        notifier.send_telegram = fake_send
+        ls.send_telegram = fake_send
+        try:
+            settings = config.Settings(
+                live_state_file=os.path.join(tempfile.mkdtemp(), "live.json"),
+                positions_file=os.path.join(tempfile.mkdtemp(), "pos.json"),
+                cache_dir=tempfile.mkdtemp(),
+            )
+            crash = TestScannerSignals()._flip_buy_frame(40_000)
+            # reuse buy frame as CIT history
+            class FakeClient:
+                def listed_scripts(self):
+                    return [dc.ListedScript("CIT", "Citizen Investment Trust", "Investment")]
+
+                def ohlcv_many(self, symbols):
+                    return {"CIT": crash}
+
+                def _nepse_client(self):
+                    return self
+
+                def market_snapshot(self):
+                    last = crash["businessDate"].iloc[-1].strftime("%Y-%m-%d")
+                    close = float(crash["close"].iloc[-1])
+                    return (
+                        {"isOpen": "OPEN", "asOf": last},
+                        [{"symbol": "CIT", "lastTradedPrice": close, "openPrice": close, "highPrice": close, "lowPrice": close, "totalTradeQuantity": 40000, "businessDate": last}],
+                        [],
+                    )
+
+            fresh = ls.run_live(
+                settings=settings,
+                client=FakeClient(),  # type: ignore[arg-type]
+                once=True,
+                send=True,
+                snapshot_fn=FakeClient().market_snapshot,
+            )
+            self.assertTrue(any(r.signal == "BUY" for r in fresh))
+            self.assertTrue(any("BUY" in t for t in sent))
+        finally:
+            notifier.send_telegram = original
+            ls.send_telegram = original
+
+
 class TestConfig(unittest.TestCase):
     def test_elite_basket_contains_required_names(self):
         basket = set(config.elite_basket())

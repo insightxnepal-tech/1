@@ -13,5 +13,6 @@ supertrend_scan_latest.json
 supertrend_scan_report.md
 supertrend_universe.json
 supertrend_positions.json
+supertrend_live_state.json
 .coverage
 htmlcov/

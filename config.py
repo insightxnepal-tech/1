@@ -28,6 +28,8 @@ MIN_HISTORY_BARS: Final[int] = VOLUME_SMA_LONG + SUPERTREND_PERIOD
 HISTORY_CALENDAR_DAYS: Final[int] = 800
 NEPSE_HISTORY_SIZE: Final[int] = 500
 FLOORSHEET_PAGE_SIZE: Final[int] = 500
+LIVE_POLL_SECONDS: Final[int] = 20
+LIVE_CLOSED_POLL_SECONDS: Final[int] = 30
 MAX_WORKERS: Final[int] = 8
 REQUEST_TIMEOUT: Final[int] = 25
 RETRY_COUNT: Final[int] = 3
@@ -129,6 +131,16 @@ class Settings:
     )
     data_source: str = field(
         default_factory=lambda: os.getenv("SUPERTREND_DATA_SOURCE", "nepse").strip().lower()
+    )
+    live_state_file: str = field(
+        default_factory=lambda: os.getenv(
+            "SUPERTREND_LIVE_STATE_FILE", "supertrend_live_state.json"
+        )
+    )
+    live_poll_seconds: int = field(
+        default_factory=lambda: int(
+            os.getenv("SUPERTREND_LIVE_POLL_SECONDS", str(LIVE_POLL_SECONDS))
+        )
     )
     workers: int = field(
         default_factory=lambda: int(os.getenv("SUPERTREND_WORKERS", str(MAX_WORKERS)))
