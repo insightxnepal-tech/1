@@ -1,0 +1,16 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.firecrawl/
+.env
+*.egg-info/
+.DS_Store
+data/ohlcv/
+supertrend_scan_latest.json
+supertrend_scan_report.md
+supertrend_universe.json
+supertrend_positions.json
+.coverage
+htmlcov/

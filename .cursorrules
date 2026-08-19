@@ -1,0 +1,30 @@
+# NEPSE Supertrend Elite Momentum Basket
+
+This repo implements a daily NEPSE Supertrend scanner and Telegram notifier.
+Keep the architecture modular: `config.py`, `data_client.py`, `indicators.py`,
+`supertrend.py`, `scanner.py`, `notifier.py`, `main.py`.
+
+## Strategy invariants
+
+- Core indicator is Supertrend(period=10, multiplier=3.0) on Wilder ATR-10.
+- BUY is a Supertrend green flip (bearish → bullish) plus the volume filter:
+  20-day volume SMA > 50-day volume SMA **or** RVOL > 1.2.
+- SELL / full exit is a Supertrend red flip (close below the green line).
+- Trailing stop is always the current green Supertrend value.
+- HOLD is an established Supertrend bullish phase; report distance to the trail.
+- Elite basket tickers stay in the universe even if they fail liquidity screens.
+- Dynamic tickers are ordinary NEPSE equities that clear volume/turnover floors.
+
+## Data and ops
+
+- Use merolagani chart OHLCV. Do not call nepalstock.com.np from CI/cloud.
+- Skip mutual funds, debentures, bonds, promoter, and preference shares.
+- Never commit `.env`, Telegram tokens, or cached OHLCV.
+- Tests must not hit the network. Live fetches belong behind CLI flags.
+
+## Code style
+
+- Python 3.11+, type hints on public functions, dataclasses for scan rows.
+- Fail soft per symbol; a single bad ticker must not abort the basket scan.
+- Telegram messages must remain under the Bot API length limit (chunk if needed).
+- Not financial advice. Do not present simulated P/L as guaranteed returns.
