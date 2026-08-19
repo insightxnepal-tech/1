@@ -68,6 +68,22 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         help="Parallel NEPSE / merolagani fetches",
     )
+    parser.add_argument(
+        "--live",
+        action="store_true",
+        help="Poll NEPSE live tape and Telegram immediately on new BUY/SELL",
+    )
+    parser.add_argument(
+        "--once",
+        action="store_true",
+        help="With --live: run a single snapshot instead of looping",
+    )
+    parser.add_argument(
+        "--poll",
+        type=int,
+        default=None,
+        help="With --live: seconds between polls while the market is open",
+    )
     return parser
 
 
@@ -81,6 +97,19 @@ def main(argv: Optional[list[str]] = None) -> int:
 
     if args.send_latest:
         return 0 if send_latest_report(settings) else 1
+
+    if args.live:
+        from live_scanner import run_live
+
+        run_live(
+            settings=settings,
+            elite_only=True if args.elite_only or not args.symbols else True,
+            poll_seconds=args.poll or settings.live_poll_seconds,
+            once=args.once,
+            until_close=not args.once,
+            send=not args.no_telegram,
+        )
+        return 0
 
     only = [s.strip().upper() for s in args.symbols.split(",") if s.strip()] or None
     client = DataClient(settings=settings, use_cache=not args.no_cache)

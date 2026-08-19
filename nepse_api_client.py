@@ -152,3 +152,14 @@ class NepseApiClient:
 
     def floorsheet_session(self) -> FloorsheetSession:
         return run_async(self._floorsheet_async())
+
+    async def _market_snapshot_async(self) -> tuple[dict, list[dict], list[dict]]:
+        async with NepseClient() as client:
+            status = await client.market_status()
+            live = await client.live_market()
+            today = await client.today_price()
+        return status or {}, live or [], today or []
+
+    def market_snapshot(self) -> tuple[dict, list[dict], list[dict]]:
+        """Market status plus live_market and today_price rows."""
+        return run_async(self._market_snapshot_async())
