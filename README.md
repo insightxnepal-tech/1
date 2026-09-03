@@ -1,3 +1,12 @@
+# InsightX Nepal
+
+This repository currently hosts two tools:
+
+- **NEPSE Supertrend Elite Momentum Basket** — daily scanner and Telegram notifier (Python, repo root)
+- **[Nyaya — Nepalese Legal AI](legal-ai/README.md)** — bilingual statutory research assistant with mandatory `[Act Title, Section (Dafa) Number]` citations (Next.js 14, `legal-ai/`)
+
+---
+
 # NEPSE Supertrend Elite Momentum Basket
 
 Daily scanner and Telegram notifier for the **Supertrend Elite Momentum Basket** on the Nepal Stock Exchange.
