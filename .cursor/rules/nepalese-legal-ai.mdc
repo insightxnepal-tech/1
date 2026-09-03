@@ -1,0 +1,19 @@
+---
+description: Guidance for building Nepalese Legal AI Agent with strict citation enforcement
+globs: legal-ai/app/**/*.ts, legal-ai/app/**/*.tsx, legal-ai/lib/**/*.ts
+alwaysApply: true
+---
+
+# Nepalese Legal AI Architecture Guidelines
+
+## Code Standards
+- Use Next.js 14 App Router conventions (`app/api/.../route.ts`).
+- Prefer Server Components for fetching data, and Client Components (`"use client"`) for chat interactivity.
+- Ensure all API routes are fully typed using TypeScript.
+
+## Grounding & Legal Rules
+- When generating system prompts for RAG, ALWAYS force the model to format legal citations strictly: `[Act Title, Section (Dafa) Number]`.
+- Enforce bilingual capabilities (English and Devanagari script).
+- Cite only sections present in the retrieved corpus. Never invent a दफा / section number.
+- If the corpus does not support the answer, refuse rather than speculate.
+- Answers are research assistance, not a substitute for licensed Nepalese legal advice.

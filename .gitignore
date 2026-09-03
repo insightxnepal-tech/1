@@ -15,3 +15,9 @@ supertrend_universe.json
 supertrend_positions.json
 .coverage
 htmlcov/
+legal-ai/node_modules/
+legal-ai/.next/
+legal-ai/out/
+legal-ai/.env
+legal-ai/.env.local
+legal-ai/*.tsbuildinfo

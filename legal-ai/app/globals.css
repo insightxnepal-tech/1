@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(200, 16, 46, 0.18), transparent 50%),
+    radial-gradient(900px 500px at 100% 0%, rgba(212, 160, 23, 0.12), transparent 45%),
+    #07111f;
+}
+
+::selection {
+  background: rgba(200, 16, 46, 0.35);
+}
+
+.citation-chip {
+  font-variant-numeric: tabular-nums;
+}
