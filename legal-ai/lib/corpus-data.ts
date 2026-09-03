@@ -274,10 +274,14 @@ export const LEGAL_CORPUS: CorpusSection[] = [
     tags: [
       "labour",
       "hours",
-      "overtime",
       "8",
       "48",
       "work",
+      "daily",
+      "week",
+      "working hours",
+      "समय",
+      "दैनिक",
       "श्रम",
       "घण्टा",
       "आठ",
@@ -343,10 +347,10 @@ export const LEGAL_CORPUS: CorpusSection[] = [
     headingEn: "Murder",
     headingNe: "ज्यान मार्ने",
     textEn:
-      "A person who, with the intention of causing death, causes the death of another person commits murder. Murder is a serious offence punishable under this Code, and the Constitution separately forbids making any law that provides for the death penalty.",
+      "A person who, with the intention of causing death, causes the death of another person commits murder. Murder is a serious offence punishable under this Code.",
     textNe:
-      "मृत्यु गराउने नियतले अरूको ज्यान लिने व्यक्तिले ज्यान मार्ने कसुर गरेको मानिन्छ। यो संहिताअन्तर्गत गम्भीर कसुर हो। संविधानले मृत्युदण्डको सजाय हुने गरी कानून बनाउन निषेध गरेको छ।",
-    tags: ["penal", "murder", "homicide", "death", "ज्यान", "हत्या", "अपराध"],
+      "मृत्यु गराउने नियतले अरूको ज्यान लिने व्यक्तिले ज्यान मार्ने कसुर गरेको मानिन्छ। यो संहिताअन्तर्गत गम्भीर कसुर हो।",
+    tags: ["penal", "murder", "homicide", "ज्यान", "हत्या", "अपराध"],
   },
   {
     id: "eta-3",
